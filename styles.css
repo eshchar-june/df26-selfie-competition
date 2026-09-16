@@ -179,26 +179,24 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
   font-weight:700;font-size:clamp(20px,5.6vw,25px);
   line-height:1.13;letter-spacing:-.025em;color:var(--navy);
 }
-.steps{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:9px;
-  list-style:none;margin:0;padding:0;
+/* Typographic, not tiled: a small label over each step, centred, no cards
+   and no colour blocks. */
+.steps{list-style:none;margin:0;padding:0;text-align:center}
+.steps li{padding:17px 0}
+.steps li + li{border-top:1px solid #ece4d3}
+.steps__n{
+  display:block;margin-bottom:6px;
+  font-size:10px;font-weight:700;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--coral);
 }
-.step{
-  background:var(--white);border:1px solid var(--card-line);
-  border-radius:16px;padding:13px 11px 15px;
+.steps__t{
+  margin:0;font-weight:700;font-size:clamp(20px,5.6vw,25px);
+  line-height:1.15;letter-spacing:-.025em;color:var(--navy);
 }
-.step__n{
-  display:flex;align-items:center;justify-content:center;
-  width:32px;height:32px;border-radius:50%;
-  font-weight:700;font-size:14.5px;color:var(--navy);
-  margin-bottom:12px;
+.steps__s{
+  margin:5px 0 0;font-size:12.5px;font-weight:500;
+  line-height:1.3;color:var(--muted);
 }
-.step__n--coral{background:var(--coral);color:var(--white)}
-.step__n--blue{background:var(--blue)}
-.step__n--yellow{background:var(--yellow)}
-
-.step__t{margin:0;font-size:11.5px;font-weight:600;line-height:1.32;color:var(--navy)}
-.step__s{margin:3px 0 0;font-size:9.5px;font-weight:500;line-height:1.28;color:var(--navy)}
 
 /* ── Carousel ── */
 .templates{margin-top:26px}
