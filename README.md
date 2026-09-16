@@ -8,11 +8,11 @@ No framework, no dependencies, no backend, no sign-up. Anyone with the link can 
 
 ```
 index.html     markup for the live page
-playground.html  /playground — How-to-join design variations
+playground.html  /playground — hero design variations, with a live contrast check
 styles.css     brand system — navy / coral / cream, type, card styles
 posts.js       the 39 ready-made captions  ← edit copy here
 app.js         carousel / edit / copy / share logic
-fonts/         Sharp Sans (June) · Caveat (marker annotation), subset to woff2
+fonts/         Sharp Sans (June), subset to woff2
 art/           waterpark + selfie photographs (not in the repo — see art/README.md)
 build.js       bundles every .html page into one self-contained file each
 dist/          build output — this is what you deploy

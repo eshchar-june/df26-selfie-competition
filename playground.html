@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>How to join — variations · June at Dreamforce 26</title>
-<meta name="description" content="Three larger, more engaging treatments of the How to join step sequence.">
+<title>Hero variations · June at Dreamforce 26</title>
+<meta name="description" content="Five treatments of the hero, each setting the photograph behind the headline.">
 <meta name="theme-color" content="#faf9f5">
 <meta name="color-scheme" content="light">
 <meta name="robots" content="noindex">
@@ -17,160 +17,89 @@
   display:inline-block;margin-top:10px;font-size:11.5px;font-weight:700;
   color:var(--muted);text-decoration:underline;text-underline-offset:3px;
 }
-.pg-lede{margin:10px 0 0;font-size:13px;line-height:1.45;color:var(--muted);max-width:34ch}
-.pg-block{margin-top:38px}
+.pg-lede{margin:10px 0 0;font-size:13px;line-height:1.45;color:var(--muted);max-width:36ch}
+.pg-block{margin-top:40px;padding-top:26px;border-top:1px solid #ece4d3}
+.pg-block:first-of-type{border-top:0}
 .pg-tag{
-  display:flex;align-items:baseline;gap:8px;margin:0 0 14px;
+  display:flex;align-items:baseline;gap:8px;margin:0 0 8px;
   font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
   color:var(--coral);
 }
 .pg-tag b{color:var(--navy);letter-spacing:.06em;text-transform:none;font-size:12.5px}
-.pg-rule{border:0;border-top:1px solid #ece4d3;margin:36px 0 0}
+.pg-note{margin:0 0 20px;font-size:12px;line-height:1.5;color:var(--muted);max-width:44ch}
 
-/* ── A · Stacked rows ── */
-.vA{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-.vA li{
-  display:flex;align-items:center;gap:15px;
-  background:var(--white);border:1px solid var(--card-line);
-  border-radius:18px;padding:16px 18px;
+/* Contrast readout, filled in by the script at the foot of the page. */
+.pg-check{
+  margin:18px 0 0;padding:9px 12px;border-radius:10px;
+  font-size:11px;font-weight:600;line-height:1.45;
+  background:#eef3ec;color:#2c5c3c;
 }
-.vA .n{
-  flex:0 0 auto;display:flex;align-items:center;justify-content:center;
-  width:48px;height:48px;border-radius:50%;
-  font-size:22px;font-weight:700;color:var(--navy);
-}
-.vA .n--1{background:var(--coral);color:#fff}
-.vA .n--2{background:var(--blue)}
-.vA .n--3{background:var(--yellow)}
-.vA .t{margin:0;font-size:21px;font-weight:700;letter-spacing:-.02em;line-height:1.1;color:var(--navy)}
-.vA .s{margin:3px 0 0;font-size:12.5px;font-weight:500;line-height:1.3;color:var(--muted)}
+.pg-check[data-state="fail"]{background:#fde5ea;color:#9c2230}
+.pg-check b{font-weight:700}
+.pg-check span{display:block;font-weight:500;opacity:.8}
 
-/* ── B · Tall cards ── */
-.vB{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.vB li{
-  background:var(--white);border:1px solid var(--card-line);
-  border-radius:20px;padding:18px 12px 18px;text-align:center;
+/* ══════════ The variations ══════════
+   Every one of them is the same three elements — headline, standfirst,
+   photograph — sharing one grid cell, so the picture sits behind the words.
+   They differ only in how the words are kept legible over it. */
+.hv{
+  position:relative;isolation:isolate;
+  display:grid;grid-template-columns:1fr;
 }
-.vB .n{
-  display:flex;align-items:center;justify-content:center;
-  width:100%;aspect-ratio:1/1;max-width:62px;margin:0 auto 13px;
-  border-radius:50%;font-size:26px;font-weight:700;color:var(--navy);
+.hv__title{
+  grid-area:1/1;z-index:3;
+  margin:0;font-weight:700;font-size:clamp(24px,7.2vw,31px);
+  line-height:1.08;letter-spacing:-.032em;color:var(--navy);
 }
-.vB .n--1{background:var(--coral);color:#fff}
-.vB .n--2{background:var(--blue)}
-.vB .n--3{background:var(--yellow)}
-.vB .t{margin:0;font-size:17px;font-weight:700;letter-spacing:-.02em;line-height:1.12;color:var(--navy)}
-.vB .s{margin:6px 0 0;font-size:11px;font-weight:500;line-height:1.3;color:var(--muted)}
+.hv__sub{
+  grid-area:2/1;z-index:3;
+  margin:15px 0 0;font-size:clamp(14px,4.1vw,16px);
+  font-weight:500;line-height:1.38;color:var(--navy);
+}
+.hv__art{grid-area:2/1;z-index:1;margin:0}
+.hv__art img{display:block;width:100%;height:auto}
 
-/* ── C · Navy band ── */
-.vC{
-  background:var(--navy-900);border-radius:22px;padding:6px 20px 8px;
-  list-style:none;margin:0;
-}
-.vC li{
-  display:flex;align-items:center;gap:16px;
-  padding:19px 0;border-bottom:1px solid rgba(255,255,255,.13);
-}
-.vC li:last-child{border-bottom:0}
-.vC .n{
-  flex:0 0 auto;display:flex;align-items:center;justify-content:center;
-  width:42px;height:42px;border-radius:50%;
-  font-size:19px;font-weight:700;color:var(--navy-900);
-}
-.vC .n--1{background:var(--coral);color:#fff}
-.vC .n--2{background:var(--blue)}
-.vC .n--3{background:var(--yellow)}
-.vC .t{margin:0;font-size:23px;font-weight:700;letter-spacing:-.025em;line-height:1.08;color:#fff}
-.vC .s{margin:3px 0 0;font-size:12.5px;font-weight:500;line-height:1.3;color:rgba(255,255,255,.66)}
-
-@media (max-width:355px){
-  .vB li{padding:14px 8px}
-  .vB .t{font-size:15px}
+/* A · Dissolve — the picture fades out before it reaches the words. */
+.hv--a .hv__sub{max-width:47%}
+.hv--a .hv__art{
+  justify-self:end;width:62%;margin-top:-16px;
+  -webkit-mask-image:linear-gradient(to right,transparent 0,rgba(0,0,0,.5) 15%,#000 32%);
+          mask-image:linear-gradient(to right,transparent 0,rgba(0,0,0,.5) 15%,#000 32%);
 }
 
-/* ── D · Numbered lines ── */
-.vD{list-style:none;margin:0;padding:0}
-.vD li{
-  display:flex;align-items:baseline;gap:14px;
-  padding:15px 0;border-bottom:1px solid #ece4d3;
-}
-.vD li:last-child{border-bottom:0}
-.vD .n{
-  flex:0 0 auto;width:20px;
-  font-size:15px;font-weight:700;color:var(--coral);
-}
-.vD .t{
-  margin:0;font-weight:700;font-size:clamp(20px,5.6vw,25px);
-  line-height:1.13;letter-spacing:-.025em;color:var(--navy);
-}
-.vD .s{margin:2px 0 0;font-size:12.5px;font-weight:500;color:var(--muted)}
-
-/* ── E · Centred stack ── */
-.vE{list-style:none;margin:0;padding:0;text-align:center}
-.vE li{padding:16px 0}
-.vE li + li{border-top:1px solid #ece4d3}
-.vE .n{
-  display:block;margin-bottom:5px;
-  font-size:10px;font-weight:700;letter-spacing:.2em;color:var(--coral);
-}
-.vE .t{
-  margin:0;font-weight:700;font-size:clamp(20px,5.6vw,25px);
-  line-height:1.13;letter-spacing:-.025em;color:var(--navy);
-}
-.vE .s{margin:4px 0 0;font-size:12.5px;font-weight:500;color:var(--muted)}
-
-/* ── F · One typographic block ── */
-.vF{
-  margin:0;font-weight:700;font-size:clamp(22px,6.2vw,28px);
-  line-height:1.24;letter-spacing:-.025em;color:var(--navy);
-}
-.vF b{font-weight:700;color:var(--coral);margin-right:.24em}
-.vF span{display:block}
-.vF .s{
-  display:block;margin-top:10px;
-  font-size:12.5px;font-weight:500;letter-spacing:0;color:var(--muted);
+/* B · Poster wash — one tint behind the lot. */
+.hv--b .hv__sub{max-width:62%}
+.hv--b .hv__art{
+  grid-area:1/1;grid-row:1/3;justify-self:end;
+  width:114%;margin:-14px -13% 0 0;opacity:.34;
 }
 
-/* ── G · Small numerals, airy ── */
-.vG{
-  margin:0;font-weight:700;font-size:clamp(22px,6.2vw,28px);
-  line-height:1.2;letter-spacing:-.025em;color:var(--navy);
-}
-.vG span{display:block;margin-bottom:22px}
-.vG span:last-of-type{margin-bottom:0}
-.vG b{
-  font-size:.42em;font-weight:700;color:var(--coral);
-  vertical-align:.95em;margin-right:.5em;letter-spacing:.04em;
-}
-.vG .s{
-  display:block;margin-top:6px;
-  font-size:12.5px;font-weight:500;letter-spacing:0;color:var(--muted);
+/* C · Scrim — the photograph is untouched; the page colour is laid over it. */
+.hv--c .hv__sub{max-width:50%}
+.hv--c .hv__art{justify-self:end;width:72%;margin-top:-24px}
+.hv--c::before{
+  content:"";grid-area:1/1;grid-row:1/3;z-index:2;
+  background:linear-gradient(to right,
+    var(--cream) 0,rgba(250,249,245,.96) 50%,rgba(250,249,245,0) 86%);
 }
 
-/* ── H · Hanging numerals ── */
-.vH{list-style:none;margin:0;padding:0}
-.vH li{display:flex;align-items:baseline;gap:16px;margin-bottom:26px}
-.vH li:last-child{margin-bottom:0}
-.vH .n{
-  flex:0 0 16px;font-size:11px;font-weight:700;
-  color:var(--coral);letter-spacing:.06em;
-}
-.vH .t{
-  margin:0;font-weight:700;font-size:clamp(21px,5.9vw,26px);
-  line-height:1.16;letter-spacing:-.025em;color:var(--navy);
+/* D · Bleed — off the right edge of the screen, under the headline only. */
+.hv--d .hv__sub{max-width:44%}
+.hv--d .hv__art{
+  justify-self:end;width:76%;margin:-14px calc(var(--gutter) * -1) 0 0;
+  -webkit-mask-image:linear-gradient(to right,transparent 0,rgba(0,0,0,.45) 12%,#000 28%);
+          mask-image:linear-gradient(to right,transparent 0,rgba(0,0,0,.45) 12%,#000 28%);
 }
 
-/* ── I · Numerals above ── */
-.vI{list-style:none;margin:0;padding:0}
-.vI li{margin-bottom:28px}
-.vI li:last-child{margin-bottom:0}
-.vI .n{
-  display:block;margin-bottom:7px;
-  font-size:10px;font-weight:700;letter-spacing:.22em;color:var(--coral);
-}
-.vI .t{
-  margin:0;font-weight:700;font-size:clamp(21px,5.9vw,26px);
-  line-height:1.16;letter-spacing:-.025em;color:var(--navy);
+/* E · Knockout bands — the type brings its own ground, so the picture can be
+   as large and as strong as it likes. */
+.hv--e .hv__sub{max-width:62%}
+.hv--e .hv__art{grid-area:1/1;grid-row:1/3;justify-self:end;width:98%;margin:-12px 0 0}
+.hv--e .hv__title span,
+.hv--e .hv__sub span{
+  background:var(--cream);
+  box-shadow:.2em 0 0 var(--cream),-.2em 0 0 var(--cream);
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;
 }
 </style>
 </head>
@@ -180,171 +109,209 @@
 
   <header class="pg-head">
     <svg class="wordmark" viewBox="0 0 41.953 12" role="img" aria-label="June"><path d="M41.9407 11.8382H33.4111V0H41.9407V2.5298H36.1679V4.55678H40.7283V7.11912H36.1679V9.27582H41.9407V11.8382Z" fill="currentColor"/><path d="M24.492 11.8382H21.8164V0H24.7514L29.2596 7.15165V0H31.9192V11.8382H29.195L24.492 4.32987V11.8382Z" fill="currentColor"/><path d="M15.4921 12C12.3301 12 10.6273 10.265 10.6273 7.10264V0H13.4976V7.10264C13.4976 8.46494 14.2434 9.24328 15.476 9.24328C16.7086 9.24328 17.4869 8.51354 17.4869 7.10264V0H20.3573V7.10264C20.3573 10.3947 18.5894 12 15.4921 12Z" fill="currentColor"/><path d="M4.56899 12C2.36328 12 0.725478 10.865 0.012207 8.93524L2.88259 7.67054C2.99584 8.07577 3.17416 8.44888 3.41755 8.77298C3.66093 9.08102 4.06616 9.24328 4.63364 9.24328C5.55818 9.24328 6.19033 8.67579 6.19033 7.2649V2.5298H1.15789V0H9.0607V7.2649C9.0607 10.5084 7.4229 12 4.56899 12Z" fill="currentColor"/></svg>
-    <p class="pg-lede">Three treatments of <strong>How to join</strong> — larger type, shorter actions, more to grab at a glance.</p>
+    <p class="pg-lede">Five ways to set the photograph <strong>behind</strong> the headline. Each one is measured against the picture underneath it, and reports its own worst contrast below.</p>
     <a class="pg-back" href="/">&larr; Back to the live page</a>
   </header>
 
   <!-- ══ A ══ -->
   <section class="pg-block">
-    <p class="pg-tag">Option A <b>Stacked rows</b></p>
-    <ol class="vA">
-      <li>
-        <span class="n n--1">1</span>
-        <div><p class="t">Snap a selfie</p><p class="s">At the June booth wall</p></div>
-      </li>
-      <li>
-        <span class="n n--2">2</span>
-        <div><p class="t">Add a caption</p><p class="s">Write your own or take a template</p></div>
-      </li>
-      <li>
-        <span class="n n--3">3</span>
-        <div><p class="t">Post it</p><p class="s">Share on LinkedIn and you&rsquo;re entered</p></div>
-      </li>
-    </ol>
-  </section>
+    <p class="pg-tag">Option A <b>Dissolve</b></p>
+    <p class="pg-note">The picture&rsquo;s left edge is masked away to nothing, so the headline&rsquo;s last line and the standfirst cross page colour carrying a trace of sky. This is what the live page runs.</p>
 
-  <hr class="pg-rule">
+    <div class="hv hv--a" data-mask="0:0,0.15:0.5,0.32:1">
+      <h1 class="hv__title">Take a selfie.<br>Win a 2-night trip to Noah&rsquo;s Ark Waterpark.</h1>
+      <p class="hv__sub">Post about June on LinkedIn for a chance to win.</p>
+      <figure class="hv__art">
+        <img src="art/hero-image.jpg" alt="Noah&rsquo;s Ark Waterpark — waterslides, palm trees and the park sign">
+      </figure>
+    </div>
+
+    <p class="pg-check" data-for="hv--a">Measuring&hellip;</p>
+  </section>
 
   <!-- ══ B ══ -->
   <section class="pg-block">
-    <p class="pg-tag">Option B <b>Tall cards</b></p>
-    <ol class="vB">
-      <li>
-        <span class="n n--1">1</span>
-        <p class="t">Snap</p>
-        <p class="s">At the June booth</p>
-      </li>
-      <li>
-        <span class="n n--2">2</span>
-        <p class="t">Caption</p>
-        <p class="s">Yours or a template</p>
-      </li>
-      <li>
-        <span class="n n--3">3</span>
-        <p class="t">Post</p>
-        <p class="s">You&rsquo;re entered</p>
-      </li>
-    </ol>
-  </section>
+    <p class="pg-tag">Option B <b>Poster wash</b></p>
+    <p class="pg-note">One picture behind the whole hero, held back to a third of its strength so it reads as a tint rather than a photograph. Every line of copy sits over it.</p>
 
-  <hr class="pg-rule">
+    <div class="hv hv--b" data-opacity="0.34">
+      <h1 class="hv__title">Take a selfie.<br>Win a 2-night trip to Noah&rsquo;s Ark Waterpark.</h1>
+      <p class="hv__sub">Post about June on LinkedIn for a chance to win.</p>
+      <figure class="hv__art">
+        <img src="art/hero-image.jpg" alt="Noah&rsquo;s Ark Waterpark — waterslides, palm trees and the park sign">
+      </figure>
+    </div>
+
+    <p class="pg-check" data-for="hv--b">Measuring&hellip;</p>
+  </section>
 
   <!-- ══ C ══ -->
   <section class="pg-block">
-    <p class="pg-tag">Option C <b>Navy band</b></p>
-    <ol class="vC">
-      <li>
-        <span class="n n--1">1</span>
-        <div><p class="t">Snap a selfie</p><p class="s">At the June booth wall</p></div>
-      </li>
-      <li>
-        <span class="n n--2">2</span>
-        <div><p class="t">Add a caption</p><p class="s">Yours, or one of ours</p></div>
-      </li>
-      <li>
-        <span class="n n--3">3</span>
-        <div><p class="t">Post to LinkedIn</p><p class="s">That&rsquo;s your entry in</p></div>
-      </li>
-    </ol>
-  </section>
+    <p class="pg-tag">Option C <b>Scrim</b></p>
+    <p class="pg-note">The photograph keeps its full colour. A wash of page colour is laid over its left third, under the words only, so nothing about the picture has to change.</p>
 
-  <hr class="pg-rule">
+    <div class="hv hv--c" data-scrim="0:1,0.5:0.96,0.86:0">
+      <h1 class="hv__title">Take a selfie.<br>Win a 2-night trip to Noah&rsquo;s Ark Waterpark.</h1>
+      <p class="hv__sub">Post about June on LinkedIn for a chance to win.</p>
+      <figure class="hv__art">
+        <img src="art/hero-image.jpg" alt="Noah&rsquo;s Ark Waterpark — waterslides, palm trees and the park sign">
+      </figure>
+    </div>
+
+    <p class="pg-check" data-for="hv--c">Measuring&hellip;</p>
+  </section>
 
   <!-- ══ D ══ -->
   <section class="pg-block">
-    <p class="pg-tag">Option D <b>Numbered lines</b></p>
-    <ol class="vD">
-      <li><span class="n">1</span><div><p class="t">Snap a selfie</p><p class="s">At the June booth wall</p></div></li>
-      <li><span class="n">2</span><div><p class="t">Add a caption</p><p class="s">Yours, or one of ours</p></div></li>
-      <li><span class="n">3</span><div><p class="t">Post to LinkedIn</p><p class="s">That&rsquo;s your entry in</p></div></li>
-    </ol>
-  </section>
+    <p class="pg-tag">Option D <b>Bleed</b></p>
+    <p class="pg-note">The picture runs off the right edge of the screen and is pulled up under the headline&rsquo;s last line. The standfirst stays clear of it entirely.</p>
 
-  <hr class="pg-rule">
+    <div class="hv hv--d" data-mask="0:0,0.12:0.45,0.28:1">
+      <h1 class="hv__title">Take a selfie.<br>Win a 2-night trip to Noah&rsquo;s Ark Waterpark.</h1>
+      <p class="hv__sub">Post about June on LinkedIn for a chance to win.</p>
+      <figure class="hv__art">
+        <img src="art/hero-image.jpg" alt="Noah&rsquo;s Ark Waterpark — waterslides, palm trees and the park sign">
+      </figure>
+    </div>
+
+    <p class="pg-check" data-for="hv--d">Measuring&hellip;</p>
+  </section>
 
   <!-- ══ E ══ -->
   <section class="pg-block">
-    <p class="pg-tag">Option E <b>Centred stack</b></p>
-    <ol class="vE">
-      <li><span class="n">Step 1</span><p class="t">Snap a selfie</p><p class="s">At the June booth wall</p></li>
-      <li><span class="n">Step 2</span><p class="t">Add a caption</p><p class="s">Yours, or one of ours</p></li>
-      <li><span class="n">Step 3</span><p class="t">Post to LinkedIn</p><p class="s">That&rsquo;s your entry in</p></li>
-    </ol>
-  </section>
+    <p class="pg-tag">Option E <b>Knockout bands</b></p>
+    <p class="pg-note">The largest picture of the five, at full strength behind everything. Each line of type carries its own band of page colour, so contrast never depends on what is underneath.</p>
 
-  <hr class="pg-rule">
+    <div class="hv hv--e" data-knockout="1">
+      <h1 class="hv__title"><span>Take a selfie.<br>Win a 2-night trip to Noah&rsquo;s Ark Waterpark.</span></h1>
+      <p class="hv__sub"><span>Post about June on LinkedIn for a chance to win.</span></p>
+      <figure class="hv__art">
+        <img src="art/hero-image.jpg" alt="Noah&rsquo;s Ark Waterpark — waterslides, palm trees and the park sign">
+      </figure>
+    </div>
 
-  <!-- ══ F ══ -->
-  <section class="pg-block">
-    <p class="pg-tag">Option F <b>One block</b></p>
-    <p class="vF">
-      <span><b>1</b>Snap a selfie.</span>
-      <span><b>2</b>Add a caption.</span>
-      <span><b>3</b>Post to LinkedIn.</span>
-      <span class="s">That&rsquo;s your entry in.</span>
-    </p>
-  </section>
-
-  <hr class="pg-rule">
-
-  <!-- ══ G ══ -->
-  <section class="pg-block">
-    <p class="pg-tag">Option G <b>Small numerals, airy</b></p>
-    <p class="vG">
-      <span><b>1</b>Snap a selfie.</span>
-      <span><b>2</b>Add a caption.</span>
-      <span><b>3</b>Post to LinkedIn.</span>
-      <span class="s">That&rsquo;s your entry in.</span>
-    </p>
-  </section>
-
-  <hr class="pg-rule">
-
-  <!-- ══ H ══ -->
-  <section class="pg-block">
-    <p class="pg-tag">Option H <b>Hanging numerals</b></p>
-    <ol class="vH">
-      <li><span class="n">01</span><p class="t">Snap a selfie</p></li>
-      <li><span class="n">02</span><p class="t">Add a caption</p></li>
-      <li><span class="n">03</span><p class="t">Post to LinkedIn</p></li>
-    </ol>
-  </section>
-
-  <hr class="pg-rule">
-
-  <!-- ══ I ══ -->
-  <section class="pg-block">
-    <p class="pg-tag">Option I <b>Numerals above</b></p>
-    <ol class="vI">
-      <li><span class="n">Step 1</span><p class="t">Snap a selfie</p></li>
-      <li><span class="n">Step 2</span><p class="t">Add a caption</p></li>
-      <li><span class="n">Step 3</span><p class="t">Post to LinkedIn</p></li>
-    </ol>
-  </section>
-
-  <hr class="pg-rule">
-
-  <!-- ══ Current, for comparison ══ -->
-  <section class="pg-block">
-    <p class="pg-tag">Current <b>On the live page</b></p>
-    <ol class="steps">
-      <li class="step">
-        <span class="step__n step__n--coral">1</span>
-        <p class="step__t">Take a selfie<br>at the June<br>booth</p>
-      </li>
-      <li class="step">
-        <span class="step__n step__n--blue">2</span>
-        <p class="step__t">Add tags +<br>a message</p>
-        <p class="step__s">(or use a template)</p>
-      </li>
-      <li class="step">
-        <span class="step__n step__n--yellow">3</span>
-        <p class="step__t">Post on<br>LinkedIn<br>and you&rsquo;re in!</p>
-      </li>
-    </ol>
+    <p class="pg-check" data-for="hv--e">Measuring&hellip;</p>
   </section>
 
 </div>
+
+<script>
+/* Reads the composite the eye actually sees: the photograph, with whatever
+   mask, opacity or scrim its variation applies, flattened onto the page
+   colour. Samples every pixel of every line box the copy puts over the
+   picture and reports the worst one against the navy. Line boxes are a
+   harsher test than the glyphs themselves, so a pass here is a real pass. */
+(function () {
+  var CREAM = [250, 249, 245], NAVY = [20, 42, 94], AA = 4.5;
+
+  function lin(c) { c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
+  function lum(c) { return 0.2126 * lin(c[0]) + 0.7152 * lin(c[1]) + 0.0722 * lin(c[2]); }
+  function ratio(a, b) { var x = lum(a), y = lum(b), hi = Math.max(x, y), lo = Math.min(x, y); return (hi + 0.05) / (lo + 0.05); }
+  function stops(attr) {
+    return attr.split(",").map(function (s) { var p = s.split(":"); return [parseFloat(p[0]), parseFloat(p[1])]; });
+  }
+
+  function measure(hv) {
+    var img = hv.querySelector("img");
+    var box = hv.getBoundingClientRect();
+    var W = Math.max(1, Math.round(box.width)), H = Math.max(1, Math.round(box.height));
+
+    var page = document.createElement("canvas"); page.width = W; page.height = H;
+    var pg = page.getContext("2d");
+    pg.fillStyle = "rgb(250,249,245)"; pg.fillRect(0, 0, W, H);
+
+    var ir = img.getBoundingClientRect();
+    var iw = Math.max(1, Math.round(ir.width)), ih = Math.max(1, Math.round(ir.height));
+    var layer = document.createElement("canvas"); layer.width = iw; layer.height = ih;
+    var lx = layer.getContext("2d");
+    lx.drawImage(img, 0, 0, iw, ih);
+
+    var mask = hv.getAttribute("data-mask");
+    if (mask) {
+      var mg = lx.createLinearGradient(0, 0, iw, 0);
+      stops(mask).forEach(function (s) { mg.addColorStop(s[0], "rgba(0,0,0," + s[1] + ")"); });
+      mg.addColorStop(1, "rgba(0,0,0,1)");
+      lx.globalCompositeOperation = "destination-in";
+      lx.fillStyle = mg; lx.fillRect(0, 0, iw, ih);
+      lx.globalCompositeOperation = "source-over";
+    }
+
+    pg.globalAlpha = parseFloat(hv.getAttribute("data-opacity") || "1");
+    pg.drawImage(layer, Math.round(ir.left - box.left), Math.round(ir.top - box.top));
+    pg.globalAlpha = 1;
+
+    var scrim = hv.getAttribute("data-scrim");
+    if (scrim) {
+      var sg = pg.createLinearGradient(0, 0, W, 0);
+      stops(scrim).forEach(function (s) { sg.addColorStop(s[0], "rgba(250,249,245," + s[1] + ")"); });
+      pg.fillStyle = sg; pg.fillRect(0, 0, W, H);
+    }
+
+    var px = pg.getImageData(0, 0, W, H).data;
+    var worst = Infinity, crossed = 0;
+    // The picture's own box, in the hero's coordinates: only type that falls
+    // inside it is tested, since everything outside is plain page colour.
+    var ax0 = Math.max(0, Math.floor(ir.left - box.left)), ax1 = Math.min(W, Math.ceil(ir.right - box.left));
+    var ay0 = Math.max(0, Math.floor(ir.top - box.top)), ay1 = Math.min(H, Math.ceil(ir.bottom - box.top));
+
+    ["\u002ehv__title", "\u002ehv__sub"].forEach(function (sel) {
+      var el = hv.querySelector(sel);
+      if (!el) return;
+      var rng = document.createRange(); rng.selectNodeContents(el);
+      Array.prototype.forEach.call(rng.getClientRects(), function (r) {
+        var x0 = Math.max(ax0, Math.floor(r.left - box.left)), x1 = Math.min(ax1, Math.ceil(r.right - box.left));
+        var y0 = Math.max(ay0, Math.floor(r.top - box.top)), y1 = Math.min(ay1, Math.ceil(r.bottom - box.top));
+        if (x1 <= x0 || y1 <= y0) return;
+        crossed++;
+        for (var y = y0; y < y1; y++) for (var x = x0; x < x1; x++) {
+          var o = (y * W + x) * 4;
+          var c = ratio(NAVY, [px[o], px[o + 1], px[o + 2]]);
+          if (c < worst) worst = c;
+        }
+      });
+    });
+    return { worst: worst, lines: crossed };
+  }
+
+  function run() {
+    Array.prototype.forEach.call(document.querySelectorAll(".pg-check"), function (out) {
+      var hv = document.querySelector("." + out.getAttribute("data-for"));
+      if (!hv) return;
+      if (hv.getAttribute("data-knockout")) {
+        var r = ratio(NAVY, CREAM);
+        out.setAttribute("data-state", "pass");
+        out.innerHTML = "<b>" + r.toFixed(1) + ":1</b> — every line keeps its own band of page colour, so the picture never touches the type." +
+                        "<span>AA asks 4.5:1 for the standfirst and 3:1 for the headline.</span>";
+        return;
+      }
+      var m;
+      try { m = measure(hv); } catch (e) { out.textContent = "Could not measure: " + e.message; return; }
+      var pass = m.worst >= AA;
+      out.setAttribute("data-state", pass ? "pass" : "fail");
+      out.innerHTML = "<b>" + (m.worst === Infinity ? "no overlap" : m.worst.toFixed(2) + ":1") + "</b> at the worst pixel under " +
+        m.lines + " line" + (m.lines === 1 ? "" : "s") + " of type that crosses the picture. " + (pass ? "Clears AA." : "Below the 4.5:1 AA floor.") +
+        "<span>AA asks 4.5:1 for the standfirst and 3:1 for the headline.</span>";
+    });
+  }
+
+  function ready() {
+    var imgs = Array.prototype.slice.call(document.images).filter(function (i) { return !i.complete; });
+    if (!imgs.length) return (document.fonts ? document.fonts.ready.then(run) : run());
+    var left = imgs.length;
+    imgs.forEach(function (i) {
+      i.addEventListener("load", function () { if (!--left) (document.fonts ? document.fonts.ready.then(run) : run()); });
+      i.addEventListener("error", function () { if (!--left) run(); });
+    });
+  }
+  if (document.readyState === "complete") ready(); else window.addEventListener("load", ready);
+  // A window resize event does not always follow a viewport change in an
+  // emulator or a resized pane, so watch the column itself instead.
+  if (window.ResizeObserver) {
+    var t, shell = document.querySelector(".shell");
+    new ResizeObserver(function () { clearTimeout(t); t = setTimeout(run, 180); }).observe(shell);
+  }
+})();
+</script>
 
 </body>
 </html>

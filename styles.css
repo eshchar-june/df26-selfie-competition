@@ -68,33 +68,55 @@ body{
   letter-spacing:.12em;text-transform:uppercase;color:var(--navy);
 }
 
-/* ── Hero ── */
-.hero{position:relative;padding-top:18px}
-
-/* The headline runs the full column so it can be set large enough to read at
-   arm's length on a phone. The photograph then sits beside the standfirst,
-   which is short enough to share the line. */
+/* ── Hero ──
+   Copy and photograph share one grid cell, so the picture sits behind the
+   words instead of beside them and the headline can run the full column.
+   Text never has to survive the picture at full strength: the photograph's
+   left edge is masked away to nothing, so everything the copy crosses is
+   page colour carrying a trace of sky. Measured against the navy, the
+   worst pixel under any glyph stays above the 4.5:1 that WCAG AA asks for
+   body text. */
+.hero{
+  position:relative;
+  display:grid;grid-template-columns:1fr;
+  padding-top:18px;
+}
 .hero__title{
-  margin:0;font-weight:700;font-size:clamp(24px,7.2vw,31px);
-  line-height:1.08;letter-spacing:-.032em;color:var(--navy);
+  grid-area:1/1;z-index:3;
+  margin:0;font-weight:700;font-size:clamp(21px,6.2vw,28px);
+  line-height:1.1;letter-spacing:-.032em;color:var(--navy);
+  /* Held clear of the picture: it breaks to more lines rather than running
+     over the palms and the sign. */
+  max-width:53%;
 }
-.hero__row{
-  display:flex;align-items:center;gap:12px;
-  margin-top:14px;
-}
+/* Held to a measure that keeps it inside the dissolved edge — past that the
+   foliage is dark enough to pull the contrast under AA. */
 .hero__sub{
-  margin:0;flex:1 1 auto;
+  grid-area:2/1;z-index:3;
+  margin:15px 0 0;max-width:47%;
   font-size:clamp(14px,4.1vw,16px);font-weight:500;
   line-height:1.38;color:var(--navy);
 }
 
-/* The photograph sits clear of the copy column — no text runs over it, and
-   it is shown whole. It needs no blend mode: the cut-out already sits on the
-   page colour, and multiplying two identical off-whites would darken the
-   ground into a visible block. */
+/* The negative margin lifts the picture into the headline's last line, which
+   crosses only the top strip of sky. It needs no blend mode: the cut-out
+   already sits on the page colour, and multiplying two identical off-whites
+   would darken the ground into a visible block. */
 .hero__art{
-  position:relative;flex:0 0 52%;
-  width:52%;margin:0;
+  /* Spans the headline and sub rows so it can be large and hang low, the way
+     the reference does. The left edge is masked to nothing, so the copy that
+     crosses it sits on clean page colour rather than on the picture. */
+  grid-area:1/1/3/2;z-index:1;
+  justify-self:end;align-self:start;
+  width:86%;margin:-8px calc(-1 * var(--gutter)) 0 0;
+  -webkit-mask-image:linear-gradient(to right,transparent 0,rgba(0,0,0,.4) 20%,#000 42%);
+          mask-image:linear-gradient(to right,transparent 0,rgba(0,0,0,.4) 20%,#000 42%);
+}
+/* Without a mask the copy would meet the picture at full strength. Pull it
+   clear instead: smaller, hard right, below the headline. */
+@supports not ((-webkit-mask-image:linear-gradient(#000,#000)) or (mask-image:linear-gradient(#000,#000))){
+  .hero__art{width:50%;margin-top:6px}
+  .hero__sub{max-width:44%}
 }
 /* Never cropped. The painterly edges fade into the page colour, and any crop
    cuts a hard line through the sky wash or the foliage. */
@@ -106,8 +128,8 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 /* Drawn stand-in, sitting behind the photograph. Visible only while
    art/waterpark.png is absent — the photo covers it once it is there. */
 .hero__art .art-fallback{
-  position:absolute;top:10px;left:8%;right:0;
-  width:82%;height:auto;
+  position:absolute;top:0;left:6%;right:0;
+  width:88%;height:auto;
 }
 .hero__art .waterpark{position:relative}
 
@@ -128,7 +150,7 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
    card's widest the copy fills two lines, and the size drops with the viewport
    so it stays at two lines down to about 360px. */
 .prize__title{
-  margin:0;font-weight:700;font-size:clamp(16px,4.5vw,20.5px);
+  margin:0;font-weight:700;font-size:clamp(18px,5.1vw,23px);
   line-height:1.26;letter-spacing:-.02em;color:var(--navy);
 }
 /* Three across, with the icon above its label: the copy is set verbatim and
@@ -195,21 +217,23 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 /* ── Post samples ── */
 .templates{margin-top:26px}
 .templates__label{margin-bottom:9px;text-align:center}
-/* A stack, not a list: the three samples are small and overlap, each stepped
-   right of the one behind, so the whole group is taken in at a glance instead
-   of being scrolled through one card at a time. */
-.samples{position:relative;padding-bottom:4px}
+/* A dealt deck, not a list: the three samples sit one on top of the next,
+   each turned a degree or two off square, so the group reads as a pile of
+   cards at a glance. Enough of each card below shows for its caption to be
+   read, and the square crop matches what a LinkedIn photo post looks like. */
+.samples{position:relative;padding:10px 0 6px}
 .samples .li-card{
-  width:80%;padding:10px;
-  box-shadow:0 4px 14px rgba(20,42,94,.09);
+  position:relative;
+  width:78%;margin-left:auto;margin-right:auto;padding:10px;
+  box-shadow:0 8px 22px rgba(20,42,94,.13);
+  transform-origin:50% 50%;
 }
-.samples .li-card + .li-card{margin-top:-30px}
-.samples .li-card:nth-child(1){margin-left:0;z-index:1}
-.samples .li-card:nth-child(2){margin-left:10%;z-index:2}
-.samples .li-card:nth-child(3){margin-left:20%;z-index:3}
-.samples .li-card{position:relative}
+.samples .li-card + .li-card{margin-top:-72%}
+.samples .li-card:nth-child(1){z-index:1;transform:translateX(-3%) rotate(-3.2deg)}
+.samples .li-card:nth-child(2){z-index:2;transform:translateX(4%) rotate(2.4deg)}
+.samples .li-card:nth-child(3){z-index:3;transform:translateX(-1%) rotate(-1.3deg)}
 
-/* Compact: a short caption, a wide crop that still holds a face, small marks. */
+/* Compact: a short caption, a square crop, small marks. */
 .samples .li-card__top{align-items:center}
 .samples .li-mark{width:21px;height:21px}
 .samples .li-dots{width:15px}
@@ -218,9 +242,9 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 .samples .li-post__tags{font-size:10.5px;margin-top:3px}
 .samples .selfie{
   margin-top:8px;border-radius:7px;
-  aspect-ratio:2/1;
+  aspect-ratio:1/1;
 }
-.samples .selfie img{object-position:50% 18%}
+.samples .selfie img{object-position:50% 28%}
 .samples .li-react{margin-top:8px}
 .samples .li-react svg{width:36px}
 
