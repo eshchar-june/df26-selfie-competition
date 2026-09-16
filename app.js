@@ -181,13 +181,6 @@
     return Promise.resolve();
   }
 
-  function copyThenOpen(text) {
-    return copyText(text).then(function () {
-      say('Caption copied — paste it into LinkedIn');
-      window.open(LI_COMPOSER + encodeURIComponent(text), '_blank', 'noopener');
-    });
-  }
-
   /* ── Build the deck ── */
   function build() {
     var frag = document.createDocumentFragment();
@@ -198,11 +191,11 @@
       var el = document.createElement('article');
       el.className = 'caption';
       el.innerHTML =
-        '<p class="caption__n">Message ' + pad(k + 1) + '</p>' +
-        '<label class="sr-only" for="draft-' + k + '">Message ' + (k + 1) + '</label>' +
+        '<p class="caption__n">Post ' + pad(k + 1) + '</p>' +
+        '<label class="sr-only" for="draft-' + k + '">Post ' + (k + 1) + '</label>' +
         '<textarea id="draft-' + k + '" class="caption__text" rows="4" spellcheck="true" ' +
         'autocapitalize="sentences"></textarea>' +
-        '<label class="sr-only" for="tags-' + k + '">Hashtags for message ' + (k + 1) + '</label>' +
+        '<label class="sr-only" for="tags-' + k + '">Hashtags for post ' + (k + 1) + '</label>' +
         '<textarea id="tags-' + k + '" class="caption__tags" rows="1" spellcheck="false" ' +
         'autocapitalize="none"></textarea>' +
         '<p class="caption__meta">' +
@@ -241,7 +234,7 @@
       });
 
       copy.addEventListener('click', function () {
-        copyText(full()).then(function () { say('Caption copied'); });
+        copyText(full()).then(function () { say('Post copied'); });
       });
 
       /* Bring a half-visible card fully into view when it's tapped. */
@@ -255,21 +248,20 @@
     cards.forEach(function (c) { grow(c.ta); grow(c.tags); });
   }
 
-  /* "Open LinkedIn" — the device's own share sheet where there is one
-     (picking LinkedIn prefills the composer), otherwise copy the caption
-     and open the web composer, so the text is always in hand. */
+  /* "Open LinkedIn" is a real link, not a scripted window.open: a popup
+     raised from a promise has lost the click that authorised it and browsers
+     swallow it, which left the button doing nothing. The handler only points
+     the link at the composer holding the post on show — setting href
+     during the click is honoured by the navigation that follows — and puts
+     the same text on the clipboard, since LinkedIn no longer reliably
+     prefills it and the visitor needs it in hand either way. */
   shareBtn.addEventListener('click', function () {
     var text = cards[i] ? cards[i].full() : '';
 
-    if (navigator.share) {
-      navigator.share({ text: text })['catch'](function (err) {
-        if (err && err.name === 'AbortError') return;      // visitor dismissed the sheet
-        copyThenOpen(text);
-      });
-      return;
-    }
-
-    copyThenOpen(text);
+    shareBtn.href = LI_COMPOSER + encodeURIComponent(text);
+    copyText(text).then(function () {
+      say('Post copied — paste it into LinkedIn');
+    });
   });
 
   /* Text areas are sized from scrollHeight, which is measured against whatever
@@ -304,9 +296,43 @@
     drawFades();
   });
 
+  /* ── The sample deck is dealt as it comes into view ──
+     Marking the deck is what arms the animation: the stylesheet leaves the
+     cards at rest until data-deal appears, so a visitor with no script, an
+     old browser, or reduced motion asked for gets the finished deck rather
+     than three cards that never arrive. */
+  function dealSamples() {
+    var deckEl = document.querySelector('.samples');
+    if (!deckEl || !window.IntersectionObserver) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    deckEl.setAttribute('data-deal', 'wait');
+
+    var fallback = 0;
+    function deal() {
+      clearTimeout(fallback);
+      deckEl.setAttribute('data-deal', 'in');
+      if (io) io.disconnect();
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      for (var k = 0; k < entries.length; k++) {
+        if (entries[k].isIntersecting) return deal();
+      }
+    }, { rootMargin: '0px 0px -12% 0px' });   /* a little past the top edge, not the whole deck */
+    io.observe(deckEl);
+
+    /* Nothing here may end with three invisible cards. If the observer has not
+       reported by now — a browser quirk, an odd scroll container — deal them
+       anyway and lose only the animation. */
+    fallback = setTimeout(deal, 6000);
+  }
+
   /* ── Start ── */
   var ruleLinks = document.querySelectorAll('.rules-link');
   for (var r = 0; r < ruleLinks.length; r++) ruleLinks[r].href = RULES_URL;
+
+  dealSamples();
 
   if (!POSTS.length) {
     say('No templates loaded');
