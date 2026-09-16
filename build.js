@@ -1,5 +1,5 @@
-/* Bundles the four source files into one self-contained page.
-   Brand fonts are subset to woff2 and embedded, so the page has no network
+/* Bundles the source files into one self-contained page.
+   Fonts are subset to woff2 and embedded, so the page has no network
    dependencies at all — it renders instantly on conference wi-fi, or offline.
 
    node build.js  →  dist/index.html        deploy this
@@ -9,32 +9,44 @@ const fs = require('fs');
 const path = require('path');
 
 const read = (f) => fs.readFileSync(path.join(__dirname, f), 'utf8');
+const dataUri = (local) =>
+  'url(data:font/woff2;base64,' +
+  fs.readFileSync(path.join(__dirname, 'fonts', local)).toString('base64') +
+  ') format("woff2")';
 
 /* CDN font file name (without the Webflow hash) → local subset */
 const FONTS = {
-  'IvoryLL-Light.otf':                 'IvoryLL-Light.woff2',
-  'IvoryLL-LightItalic.ttf':           'IvoryLL-LightItalic.woff2',
-  'IvoryLL-Regular.ttf':               'IvoryLL-Regular.woff2',
-  'Sharp Sans Medium.woff':            'Sharp_Sans_Medium.woff2',
-  'Sharp Sans Semibold.woff':          'Sharp_Sans_Semibold.woff2',
-  'SharpSansBold.woff':                'SharpSansBold.woff2',
-  'SharpEarthMono-Regular-Trial.otf':  'SharpEarthMono-Regular-Trial.woff2',
-  'SharpEarthMono-Bold-Trial.otf':     'SharpEarthMono-Bold-Trial.woff2'
+  'Sharp Sans Medium.woff':   'Sharp_Sans_Medium.woff2',
+  'Sharp Sans Semibold.woff': 'Sharp_Sans_Semibold.woff2',
+  'SharpSansBold.woff':       'SharpSansBold.woff2'
 };
 
 let css = read('styles.css');
 let embedded = 0;
 
+/* 1 — June's brand faces, referenced from the Webflow CDN during development. */
 css = css.replace(
   /url\("https:\/\/cdn\.prod\.website-files\.com\/[^"]*?_([^"_\/]+?)"\)\s*format\("[a-z]+"\)/g,
   (whole, file) => {
     const local = FONTS[decodeURIComponent(file)];
     if (!local) { console.warn('  ! no subset for ' + file + ' — left on the CDN'); return whole; }
-    const b64 = fs.readFileSync(path.join(__dirname, 'fonts', local)).toString('base64');
     embedded++;
-    return 'url(data:font/woff2;base64,' + b64 + ') format("woff2")';
+    return dataUri(local);
   }
 );
+
+/* 2 — Faces already served from fonts/ (Caveat, for the marker annotations). */
+css = css.replace(
+  /url\("fonts\/([^"]+\.woff2)"\)\s*format\("woff2"\)/g,
+  (whole, local) => {
+    if (!fs.existsSync(path.join(__dirname, 'fonts', local))) {
+      console.warn('  ! missing fonts/' + local + ' — left as a relative URL'); return whole;
+    }
+    embedded++;
+    return dataUri(local);
+  }
+);
+
 
 const src = read('index.html');
 const title = /<title>([\s\S]*?)<\/title>/.exec(src)[1];
@@ -65,7 +77,8 @@ fs.mkdirSync(path.join(__dirname, 'dist'), { recursive: true });
 fs.writeFileSync(path.join(__dirname, 'dist/index.html'), page);
 fs.writeFileSync(path.join(__dirname, 'dist/fragment.html'), fragment);
 
+const faces = (read('styles.css').match(/@font-face/g) || []).length;
 const kb = (s) => (Buffer.byteLength(s) / 1024).toFixed(0) + ' KB';
-console.log('fonts embedded:      ' + embedded + '/' + Object.keys(FONTS).length);
+console.log('fonts embedded:      ' + embedded + '/' + faces);
 console.log('dist/index.html:     ' + kb(page));
 console.log('dist/fragment.html:  ' + kb(fragment));
