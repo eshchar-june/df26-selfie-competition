@@ -110,6 +110,17 @@ body{
   object-fit:cover;object-position:74% 50%;
   mix-blend-mode:multiply;
 }
+/* A hidden img must stay hidden: display:block above would otherwise win
+   over the user agent[hidden] rule and render the alt text. */
+img[hidden]{display:none !important}   /* wins over the per-image display rules below */
+
+/* Drawn stand-in, sitting behind the photograph. Visible only while
+   art/waterpark.png is absent — the photo covers it once it is there. */
+.hero__art .art-fallback{
+  position:absolute;top:0;left:0;right:0;
+  width:100%;height:86%;   /* stops short of the prize card copy below */
+}
+.hero__art .waterpark{position:relative}
 
 /* Marker annotation */
 .scribble{
@@ -241,7 +252,12 @@ body{
   position:relative;margin-top:10px;overflow:hidden;
   aspect-ratio:4/3;background:#f4efe9;
 }
-.selfie img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 34%}
+.selfie img{
+  display:block;width:100%;height:100%;
+  object-fit:cover;object-position:50% 34%;
+  position:relative;
+}
+.selfie__wall{position:absolute;inset:0;width:100%;height:100%}
 
 .count{
   margin:13px 0 0;text-align:center;
