@@ -19,10 +19,9 @@
   /* ── Elements ── */
   var $ = function (id) { return document.getElementById(id); };
   var deck = $('deck'), wrap = document.querySelector('.deck-wrap');
-  var preview = $('preview'), tags = $('tags');
   var pos = $('pos'), total = $('total'), pips = $('pips'), status = $('status');
   var shareBtn = $('share');
-  var shots = document.querySelectorAll('.selfie .shot');
+  var samples = document.querySelectorAll('.samples .li-card');
 
   /* ── State ── */
   var i = 0;              // active template
@@ -66,17 +65,30 @@
     return { text: cut.replace(/[,.;:—-]+$/, ''), cut: true };
   }
 
-  function drawPreview(text) {
+  function drawPreview(card, text) {
     var parts = split(text);
     var shown = clip(parts.body, 108);
-    preview.textContent = shown.text + (shown.cut ? '… ' : '');
+    var body = card.querySelector('.li-post__text');
+    body.textContent = shown.text + (shown.cut ? '\u2026 ' : '');
     if (shown.cut) {
       var more = document.createElement('span');
       more.className = 'more';
       more.textContent = 'see more';
-      preview.appendChild(more);
+      body.appendChild(more);
     }
-    tags.textContent = parts.tags;
+    card.querySelector('.li-post__tags').textContent = parts.tags;
+  }
+
+  /* Three showcase posts, each a different caption, drawn once at load. */
+  function fillSamples() {
+    var picks = [], guard = 0;
+    while (picks.length < samples.length && guard++ < 400) {
+      var k = Math.floor(Math.random() * POSTS.length);
+      if (picks.indexOf(k) === -1) picks.push(k);
+    }
+    for (var s = 0; s < samples.length; s++) {
+      drawPreview(samples[s], POSTS[picks[s]].text);
+    }
   }
 
   function drawPips() {
@@ -88,15 +100,6 @@
       html += '<i class="' + (start + k === i ? 'is-on' : '') + '"></i>';
     }
     pips.innerHTML = html;
-  }
-
-  /* Each template shows a different booth selfie, cycling through the set. */
-  function drawShot() {
-    if (!shots.length) return;
-    var pick = i % shots.length;
-    for (var k = 0; k < shots.length; k++) {
-      shots[k].classList.toggle('is-on', k === pick);
-    }
   }
 
   /* The track is as tall as the card in view, so short captions don't leave
@@ -119,9 +122,7 @@
     i = next;
     cards[i].el.classList.add('is-on');
     pos.textContent = i + 1;
-    drawPreview(cards[i].ta.value);
     drawPips();
-    drawShot();
     fitHeight();
   }
 
@@ -199,7 +200,6 @@
         grow(ta);
         fitHeight();
         if (undo.hidden) undo.hidden = false;
-        if (k === i) drawPreview(ta.value);
       });
 
       undo.addEventListener('click', function () {
@@ -207,7 +207,6 @@
         undo.hidden = true;
         grow(ta);
         fitHeight();
-        if (k === i) drawPreview(ta.value);
         say('Edits undone');
       });
 
@@ -260,13 +259,12 @@
   }
 
   build();
+  fillSamples();
 
   i = Math.floor(Math.random() * POSTS.length);     // a fresh one for each visitor
   cards[i].el.classList.add('is-on');
   pos.textContent = i + 1;
-  drawPreview(cards[i].ta.value);
   drawPips();
-  drawShot();
   fitHeight();
   deck.scrollLeft = i * (cards[0].el.offsetWidth + 11);
   drawFades();

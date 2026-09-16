@@ -120,7 +120,7 @@
           </g>
         </g>
       </svg>
-      <img class="waterpark" src="art/hero-image.jpg" onerror="this.hidden=true"
+      <img class="waterpark" src="art/hero-image.png" onerror="this.hidden=true"
            onload="this.previousElementSibling.setAttribute('hidden','')"
            alt="Noah&rsquo;s Ark Waterpark — waterslides, palm trees and the park sign">
     </figure>
@@ -180,50 +180,23 @@
   <!-- ══════════ Template carousel ══════════ -->
   <section class="templates">
 
-    <div class="carousel">
+    <div class="samples">
       <article class="li-card">
         <div class="li-card__top">
-          <span class="li-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4.5" fill="#0a66c2"/><path d="M7.2 9.6H4.8V19h2.4zM6 5.4a1.4 1.4 0 100 2.8 1.4 1.4 0 000-2.8zM19.2 19h-2.4v-4.9c0-1.2-.4-2-1.5-2-.9 0-1.4.6-1.6 1.2-.1.2-.1.5-.1.8V19H11.2s0-7.7 0-9.4h2.4v1.3c.3-.5 1-1.3 2.5-1.3 1.8 0 3.1 1.2 3.1 3.7z" fill="#fff"/></svg>
-          </span>
-          <span class="li-dots" aria-hidden="true">
-            <svg viewBox="0 0 24 6"><circle cx="3" cy="3" r="2.4" fill="#5d6470"/><circle cx="12" cy="3" r="2.4" fill="#5d6470"/><circle cx="21" cy="3" r="2.4" fill="#5d6470"/></svg>
-          </span>
-        </div>
-
-        <!-- The visitor's own selfie is what actually goes up on LinkedIn;
-             this is the booth-wall shot standing in for the preview. -->
-        <div class="selfie">
-          <svg class="art-fallback selfie__wall" viewBox="0 0 200 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <defs>
-              <pattern id="june-tile" width="62" height="42" patternUnits="userSpaceOnUse" patternTransform="rotate(-15)">
-                <text x="0" y="15" font-family="Helvetica,Arial,sans-serif" font-size="16" font-weight="bold" fill="#f4563f" opacity=".72" letter-spacing="0.4">JUNE</text>
-              </pattern>
-            </defs>
-            <rect width="200" height="150" fill="#f7ece4"/>
-            <rect width="200" height="150" fill="url(#june-tile)"/>
-            <g fill="#142a5e" opacity=".16" transform="translate(70 34) scale(.42)">
-              <circle cx="60" cy="52" r="27"/>
-              <path d="M60 86c27 0 47 19 51 44a4 4 0 0 1-4 5H13a4 4 0 0 1-4-5c4-25 24-44 51-44z"/>
-            </g>
-          </svg>
-          <img class="shot" data-shot="0" src="art/selfie-1.jpg" onerror="this.hidden=true"
-               alt="A visitor smiling at the June booth wall">
-          <img class="shot" data-shot="1" src="art/selfie-2.jpg" onerror="this.hidden=true"
-               alt="" aria-hidden="true">
-          <img class="shot" data-shot="2" src="art/selfie-3.jpg" onerror="this.hidden=true"
-               alt="" aria-hidden="true">
-          <img class="shot" data-shot="3" src="art/selfie-4.jpg" onerror="this.hidden=true"
-               alt="" aria-hidden="true">
+          <span class="li-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4.5" fill="#0a66c2"/><path d="M7.2 9.6H4.8V19h2.4zM6 5.4a1.4 1.4 0 100 2.8 1.4 1.4 0 000-2.8zM19.2 19h-2.4v-4.9c0-1.2-.4-2-1.5-2-.9 0-1.4.6-1.6 1.2-.1.2-.1.5-.1.8V19H11.2s0-7.7 0-9.4h2.4v1.3c.3-.5 1-1.3 2.5-1.3 1.8 0 3.1 1.2 3.1 3.7z" fill="#fff"/></svg></span>
+          <span class="li-dots" aria-hidden="true"><svg viewBox="0 0 24 6"><circle cx="3" cy="3" r="2.4" fill="#5d6470"/><circle cx="12" cy="3" r="2.4" fill="#5d6470"/><circle cx="21" cy="3" r="2.4" fill="#5d6470"/></svg></span>
         </div>
 
         <div class="li-post">
-          <p class="li-post__text" id="preview"></p>
-          <p class="li-post__tags" id="tags"></p>
+          <p class="li-post__text"></p>
+          <p class="li-post__tags"></p>
         </div>
 
-        <div class="li-react" aria-hidden="true">
-          <svg viewBox="0 0 43 20" role="presentation">
+        <div class="selfie">
+          <img src="art/image-1.png" alt="A visitor smiling at the June wall">
+        </div>
+
+        <div class="li-react" aria-hidden="true"><svg viewBox="0 0 43 20" role="presentation">
             <g stroke="#fff" stroke-width="1.7">
               <circle cx="10" cy="10" r="9" fill="#e8434b"/>
               <circle cx="21" cy="10" r="9" fill="#378fe9"/>
@@ -232,11 +205,66 @@
             <path d="M10 14.4C6.6 12 5.5 10.6 5.5 9.1A2.3 2.3 0 0 1 10 8a2.3 2.3 0 0 1 4.5 1.1c0 1.5-1.1 2.9-4.5 5.3z" fill="#fff"/>
             <path d="M17.6 10.1h1.9v4.6h-1.9zM20.3 14.7V9.8l1.8-2.7c.4-.6 1.5-.4 1.3.5l-.3 1.7h2c.6 0 1.1.5.9 1.2l-.9 3.6a1 1 0 0 1-1 .6z" fill="#fff"/>
             <polygon points="32,5.4 33.2,8.4 36.4,8.6 33.9,10.6 34.7,13.7 32,12 29.3,13.7 30.1,10.6 27.6,8.6 30.8,8.4" fill="#fff"/>
-          </svg>
-        </div>
+          </svg></div>
       </article>
 
+      <article class="li-card">
+        <div class="li-card__top">
+          <span class="li-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4.5" fill="#0a66c2"/><path d="M7.2 9.6H4.8V19h2.4zM6 5.4a1.4 1.4 0 100 2.8 1.4 1.4 0 000-2.8zM19.2 19h-2.4v-4.9c0-1.2-.4-2-1.5-2-.9 0-1.4.6-1.6 1.2-.1.2-.1.5-.1.8V19H11.2s0-7.7 0-9.4h2.4v1.3c.3-.5 1-1.3 2.5-1.3 1.8 0 3.1 1.2 3.1 3.7z" fill="#fff"/></svg></span>
+          <span class="li-dots" aria-hidden="true"><svg viewBox="0 0 24 6"><circle cx="3" cy="3" r="2.4" fill="#5d6470"/><circle cx="12" cy="3" r="2.4" fill="#5d6470"/><circle cx="21" cy="3" r="2.4" fill="#5d6470"/></svg></span>
+        </div>
+
+        <div class="li-post">
+          <p class="li-post__text"></p>
+          <p class="li-post__tags"></p>
+        </div>
+
+        <div class="selfie">
+          <img src="art/image-2.png" alt="A visitor giving a thumbs up at the June wall">
+        </div>
+
+        <div class="li-react" aria-hidden="true"><svg viewBox="0 0 43 20" role="presentation">
+            <g stroke="#fff" stroke-width="1.7">
+              <circle cx="10" cy="10" r="9" fill="#e8434b"/>
+              <circle cx="21" cy="10" r="9" fill="#378fe9"/>
+              <circle cx="32" cy="10" r="9" fill="#f0b73e"/>
+            </g>
+            <path d="M10 14.4C6.6 12 5.5 10.6 5.5 9.1A2.3 2.3 0 0 1 10 8a2.3 2.3 0 0 1 4.5 1.1c0 1.5-1.1 2.9-4.5 5.3z" fill="#fff"/>
+            <path d="M17.6 10.1h1.9v4.6h-1.9zM20.3 14.7V9.8l1.8-2.7c.4-.6 1.5-.4 1.3.5l-.3 1.7h2c.6 0 1.1.5.9 1.2l-.9 3.6a1 1 0 0 1-1 .6z" fill="#fff"/>
+            <polygon points="32,5.4 33.2,8.4 36.4,8.6 33.9,10.6 34.7,13.7 32,12 29.3,13.7 30.1,10.6 27.6,8.6 30.8,8.4" fill="#fff"/>
+          </svg></div>
+      </article>
+
+      <article class="li-card">
+        <div class="li-card__top">
+          <span class="li-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4.5" fill="#0a66c2"/><path d="M7.2 9.6H4.8V19h2.4zM6 5.4a1.4 1.4 0 100 2.8 1.4 1.4 0 000-2.8zM19.2 19h-2.4v-4.9c0-1.2-.4-2-1.5-2-.9 0-1.4.6-1.6 1.2-.1.2-.1.5-.1.8V19H11.2s0-7.7 0-9.4h2.4v1.3c.3-.5 1-1.3 2.5-1.3 1.8 0 3.1 1.2 3.1 3.7z" fill="#fff"/></svg></span>
+          <span class="li-dots" aria-hidden="true"><svg viewBox="0 0 24 6"><circle cx="3" cy="3" r="2.4" fill="#5d6470"/><circle cx="12" cy="3" r="2.4" fill="#5d6470"/><circle cx="21" cy="3" r="2.4" fill="#5d6470"/></svg></span>
+        </div>
+
+        <div class="li-post">
+          <p class="li-post__text"></p>
+          <p class="li-post__tags"></p>
+        </div>
+
+        <div class="selfie">
+          <img src="art/image-3.png" alt="A visitor laughing at the June wall">
+        </div>
+
+        <div class="li-react" aria-hidden="true"><svg viewBox="0 0 43 20" role="presentation">
+            <g stroke="#fff" stroke-width="1.7">
+              <circle cx="10" cy="10" r="9" fill="#e8434b"/>
+              <circle cx="21" cy="10" r="9" fill="#378fe9"/>
+              <circle cx="32" cy="10" r="9" fill="#f0b73e"/>
+            </g>
+            <path d="M10 14.4C6.6 12 5.5 10.6 5.5 9.1A2.3 2.3 0 0 1 10 8a2.3 2.3 0 0 1 4.5 1.1c0 1.5-1.1 2.9-4.5 5.3z" fill="#fff"/>
+            <path d="M17.6 10.1h1.9v4.6h-1.9zM20.3 14.7V9.8l1.8-2.7c.4-.6 1.5-.4 1.3.5l-.3 1.7h2c.6 0 1.1.5.9 1.2l-.9 3.6a1 1 0 0 1-1 .6z" fill="#fff"/>
+            <polygon points="32,5.4 33.2,8.4 36.4,8.6 33.9,10.6 34.7,13.7 32,12 29.3,13.7 30.1,10.6 27.6,8.6 30.8,8.4" fill="#fff"/>
+          </svg></div>
+      </article>
     </div>
+
+    <h2 class="deck__title">Copy these</h2>
+    <p class="deck__sub">Or create your own</p>
 
     <!-- ══ Caption deck — one card per template, swipe sideways ══ -->
     <div class="deck-wrap">

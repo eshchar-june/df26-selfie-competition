@@ -4,11 +4,34 @@
 
 | file | what it is | used by |
 |------|------------|---------|
-| `selfie-1.jpg` … `selfie-4.jpg` | Booth selfies at the June wall | the LinkedIn post preview |
-| `hero-image.jpg` | Noah's Ark Waterpark, cut out on off-white | the hero |
+| `hero-image.png` | Noah's Ark Waterpark, cut out on off-white | the hero |
+| `image-1.png` … `image-3.png` | Booth selfies at the June wall | the three post samples |
+| `image-4.png` | A fourth selfie, unused | — |
+| `selfie-*.jpg`, `hero-image.jpg` | Compressed copies of the above | not currently referenced |
 
-`build.js` embeds whatever it finds here as a data URI and warns for anything missing, so
-a build without the waterpark photo still succeeds — the hero falls back to drawn art.
+`build.js` embeds whatever the HTML references as a data URI and warns for anything
+missing.
+
+## Weight
+
+The page currently references the full-size PNGs, which makes `dist/index.html` **10.6 MB**.
+At that size the browser leaves large areas of the page unpainted while it decodes them —
+verified by swapping in the compressed copies, which brought the page to 680 KB and made
+it render correctly.
+
+PNG is a poor format for photographs: these are 1254px square at roughly 2 MB each, shown
+in a 265px slot. The compressed `.jpg` copies are the same pictures at 560px and about
+75 KB. To switch back, point the four `src` attributes in `index.html` at
+`hero-image.jpg` and `selfie-1.jpg` … `selfie-3.jpg`.
+
+To regenerate the compressed copies:
+
+```bash
+sips -s format jpeg -s formatOptions 86 -Z 820 hero-image.png --out hero-image.jpg
+for n in 1 2 3 4; do
+  sips -s format jpeg -s formatOptions 72 -Z 560 "image-$n.png" --out "selfie-$n.jpg"
+done
+```
 
 ## The selfies
 

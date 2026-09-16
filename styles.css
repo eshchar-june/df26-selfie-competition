@@ -198,9 +198,9 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
   line-height:1.3;color:var(--muted);
 }
 
-/* ── Carousel ── */
+/* ── Post samples ── */
 .templates{margin-top:26px}
-.carousel{position:relative}
+.samples{display:grid;gap:14px}
 
 /* White frame around the whole post, with the image inset inside it. */
 .li-card{
@@ -229,17 +229,10 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
   position:relative;margin-top:12px;overflow:hidden;
   border-radius:9px;aspect-ratio:1/1;background:#f4efe9;
 }
-/* Four booth selfies stacked in the same frame; the carousel cross-fades
-   between them so each template preview looks like a different post. */
 .selfie img{
-  position:absolute;inset:0;
   display:block;width:100%;height:100%;
   object-fit:cover;object-position:50% 30%;
-  opacity:0;transition:opacity .32s ease;
 }
-.selfie img.is-on{opacity:1}
-@media (prefers-reduced-motion:reduce){.selfie img{transition:none}}
-.selfie__wall{position:absolute;inset:0;width:100%;height:100%}
 
 .count{
   margin:13px 0 0;text-align:center;
@@ -252,11 +245,21 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 .li-react{margin-top:11px}
 .li-react svg{display:block;width:43px;height:auto}
 
+.deck__title{
+  margin:30px 0 0;text-align:center;
+  font-weight:700;font-size:clamp(20px,5.6vw,25px);
+  line-height:1.15;letter-spacing:-.025em;color:var(--navy);
+}
+.deck__sub{
+  margin:5px 0 0;text-align:center;
+  font-size:13px;font-weight:500;color:var(--muted);
+}
+
 /* ── Caption deck ──
    One card per template on a horizontal snap track. Cards are narrower than
    the page so the next one peeks, and the track bleeds past the gutter with a
    fade on each open edge, so it reads as "there is more this way". */
-.deck-wrap{position:relative;margin-top:17px}
+.deck-wrap{position:relative;margin-top:15px}
 
 .deck{
   display:flex;gap:11px;align-items:flex-start;
