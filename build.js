@@ -35,7 +35,7 @@ css = css.replace(
   }
 );
 
-/* 2 — Faces already served from fonts/ (Caveat, for the marker annotations). */
+/* 2 — Any face already served from fonts/ rather than the CDN. */
 css = css.replace(
   /url\("fonts\/([^"]+\.woff2)"\)\s*format\("woff2"\)/g,
   (whole, local) => {

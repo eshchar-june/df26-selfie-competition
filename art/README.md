@@ -29,7 +29,7 @@ To regenerate the compressed copies:
 ```bash
 sips -s format jpeg -s formatOptions 86 -Z 820 hero-image.png --out hero-image.jpg
 for n in 1 2 3 4; do
-  sips -s format jpeg -s formatOptions 72 -Z 560 "image-$n.png" --out "selfie-$n.jpg"
+  sips -s format jpeg -s formatOptions 72 -Z 560 "selfie-$n.png" --out "selfie-$n.jpg"
 done
 ```
 

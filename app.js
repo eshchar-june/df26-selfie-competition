@@ -65,9 +65,9 @@
     return { text: cut.replace(/[,.;:—-]+$/, ''), cut: true };
   }
 
-  function drawPreview(card, text) {
+  function drawPreview(card, text, max) {
     var parts = split(text);
-    var shown = clip(parts.body, 108);
+    var shown = clip(parts.body, max || 108);
     var body = card.querySelector('.li-post__text');
     body.textContent = shown.text + (shown.cut ? '\u2026 ' : '');
     if (shown.cut) {
@@ -87,7 +87,7 @@
       if (picks.indexOf(k) === -1) picks.push(k);
     }
     for (var s = 0; s < samples.length; s++) {
-      drawPreview(samples[s], POSTS[picks[s]].text);
+      drawPreview(samples[s], POSTS[picks[s]].text, 62);
     }
   }
 
