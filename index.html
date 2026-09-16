@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Take a selfie · June at Dreamforce 26</title>
 <meta name="description" content="Take a selfie at the June booth, post it on LinkedIn, and enter to win a two-night trip for four to Noah's Ark Waterpark.">
-<meta name="theme-color" content="#fdfbf1">
+<meta name="theme-color" content="#faf9f5">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="color-scheme" content="light">
@@ -27,12 +27,10 @@
 
     <div class="hero__copy">
       <h1 class="hero__title">
-        Take a selfie.<span class="splash" aria-hidden="true"><svg viewBox="0 0 30 30" fill="none"><path d="M2 27L13 15" stroke="currentColor" stroke-width="3.8" stroke-linecap="round"/><path d="M13 29L20 15" stroke="currentColor" stroke-width="3.8" stroke-linecap="round"/><path d="M22 27L24 14" stroke="currentColor" stroke-width="3.8" stroke-linecap="round"/></svg></span><br>
-        Win a 2-night trip<br>
-        to Noah&rsquo;s Ark<br>
-        Waterpark.
+        Take a selfie.<br>
+        Win a 2-night trip to Noah&rsquo;s Ark Waterpark.
       </h1>
-      <p class="hero__sub">Post on LinkedIn at Dreamforce<br>for a chance to win.</p>
+      <p class="hero__sub">Post about June on LinkedIn for a chance to win.</p>
     </div>
 
     <figure class="hero__art">
@@ -123,7 +121,8 @@
           </g>
         </g>
       </svg>
-      <img class="waterpark" src="art/waterpark.png" onerror="this.hidden=true"
+      <img class="waterpark" src="art/waterpark.jpg" onerror="this.hidden=true"
+           onload="this.previousElementSibling.setAttribute('hidden','')"
            alt="Noah&rsquo;s Ark Waterpark — waterslides, palm trees and the park sign">
     </figure>
   </section>
@@ -155,12 +154,14 @@
       <path d="M2.6 10h18.8M7.6 2.6v4M16.4 2.6v4" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
       <g fill="currentColor"><rect x="6.4" y="13" width="2.6" height="2.6" rx=".7"/><rect x="11" y="13" width="2.6" height="2.6" rx=".7"/><rect x="6.4" y="17" width="2.6" height="2.6" rx=".7"/></g>
     </svg>
-    <p><strong>Raffle drawing: Thursday, October 16, 2025</strong><br>Visit <a id="rules" href="#" target="_blank" rel="noopener">june.ai/dreamforce</a> for full details.</p>
+    <p><strong>Raffle drawing: Thursday, October 16, 2025</strong><br>
+      Visit <a class="rules-link" href="#" target="_blank" rel="noopener">june.ai/dreamforce</a> for full details.<br>
+      <a class="rules-link" href="#" target="_blank" rel="noopener">View full eligibility, official rules, and other ways to enter</a></p>
   </aside>
 
   <!-- ══════════ How to join ══════════ -->
   <section class="join">
-    <p class="label">How to join?</p>
+    <h2 class="join__title">How to join?</h2>
     <ol class="steps">
       <li class="step">
         <span class="step__n step__n--coral">1</span>
@@ -178,16 +179,10 @@
     </ol>
   </section>
 
-  <p class="join__cta">Post about June on LinkedIn for a chance to win.<br><strong>Generate your draft, make it yours, and share.</strong></p>
-
   <!-- ══════════ Template carousel ══════════ -->
   <section class="templates">
 
     <div class="carousel">
-      <button class="nav nav--prev" id="prev" type="button" aria-label="Previous template">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-
       <article class="li-card">
         <div class="li-card__top">
           <span class="li-mark" aria-hidden="true">
@@ -196,11 +191,6 @@
           <span class="li-dots" aria-hidden="true">
             <svg viewBox="0 0 24 6"><circle cx="3" cy="3" r="2.4" fill="#5d6470"/><circle cx="12" cy="3" r="2.4" fill="#5d6470"/><circle cx="21" cy="3" r="2.4" fill="#5d6470"/></svg>
           </span>
-        </div>
-
-        <div class="li-post">
-          <p class="li-post__text" id="preview"></p>
-          <p class="li-post__tags" id="tags"></p>
         </div>
 
         <!-- The visitor's own selfie is what actually goes up on LinkedIn;
@@ -228,30 +218,35 @@
           <img class="shot" data-shot="3" src="art/selfie-4.jpg" onerror="this.hidden=true"
                alt="" aria-hidden="true">
         </div>
+
+        <div class="li-post">
+          <p class="li-post__text" id="preview"></p>
+          <p class="li-post__tags" id="tags"></p>
+        </div>
+
+        <div class="li-react" aria-hidden="true">
+          <svg viewBox="0 0 43 20" role="presentation">
+            <g stroke="#fff" stroke-width="1.7">
+              <circle cx="10" cy="10" r="9" fill="#e8434b"/>
+              <circle cx="21" cy="10" r="9" fill="#378fe9"/>
+              <circle cx="32" cy="10" r="9" fill="#f0b73e"/>
+            </g>
+            <path d="M10 14.4C6.6 12 5.5 10.6 5.5 9.1A2.3 2.3 0 0 1 10 8a2.3 2.3 0 0 1 4.5 1.1c0 1.5-1.1 2.9-4.5 5.3z" fill="#fff"/>
+            <path d="M17.6 10.1h1.9v4.6h-1.9zM20.3 14.7V9.8l1.8-2.7c.4-.6 1.5-.4 1.3.5l-.3 1.7h2c.6 0 1.1.5.9 1.2l-.9 3.6a1 1 0 0 1-1 .6z" fill="#fff"/>
+            <polygon points="32,5.4 33.2,8.4 36.4,8.6 33.9,10.6 34.7,13.7 32,12 29.3,13.7 30.1,10.6 27.6,8.6 30.8,8.4" fill="#fff"/>
+          </svg>
+        </div>
       </article>
 
-      <button class="nav nav--next" id="next" type="button" aria-label="Next template">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
+    </div>
+
+    <!-- ══ Caption deck — one card per template, swipe sideways ══ -->
+    <div class="deck-wrap">
+      <div class="deck" id="deck" role="group" aria-label="Caption templates — scroll sideways for more"></div>
     </div>
 
     <p class="count"><span id="pos">1</span> / <span id="total">39</span></p>
     <div class="pips" id="pips" aria-hidden="true"></div>
-
-    <!-- ══════════ Caption ══════════ -->
-    <div class="caption">
-      <p class="caption__n" id="num">01</p>
-      <label class="sr-only" for="draft">Your LinkedIn caption</label>
-      <textarea id="draft" class="caption__text" rows="4" spellcheck="true" autocapitalize="sentences"></textarea>
-      <p class="caption__meta">
-        <span id="hint">Tap the text to make it yours</span>
-        <button class="linkish" id="reset" type="button" hidden>Undo edits</button>
-      </p>
-      <button class="btn btn--ghost" id="copy" type="button">
-        <svg class="btn__ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="8.6" y="8.6" width="11.4" height="12.4" rx="2.6" stroke="currentColor" stroke-width="1.9"/><path d="M15.4 6.2A2.4 2.4 0 0 0 13 3.8H6.4A2.6 2.6 0 0 0 3.8 6.4v6.8a2.4 2.4 0 0 0 2.4 2.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
-        Copy text
-      </button>
-    </div>
 
     <button class="btn btn--navy" id="share" type="button">
       <span class="li-mark li-mark--btn" aria-hidden="true">

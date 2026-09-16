@@ -15,7 +15,7 @@
 :root{
   color-scheme:light;
 
-  --cream:#fdfbf1;
+  --cream:#faf9f5;
   --white:#fff;
   --navy:#142a5e;
   --navy-900:#111f3d;
@@ -79,46 +79,35 @@ body{
 .hero__copy{position:relative;z-index:3}
 
 .hero__title{
-  margin:0;font-weight:700;font-size:clamp(23px,6.6vw,29px);
+  margin:0;font-weight:700;font-size:clamp(20px,5.6vw,25px);
   line-height:1.13;letter-spacing:-.025em;color:var(--navy);
-  max-width:65%;
+  max-width:40%;
 }
-.splash{
-  display:inline-block;width:.58em;margin-left:.08em;
-  color:var(--coral);vertical-align:.3em;
-}
-.splash svg{display:block;width:100%;height:auto}
-
 .hero__sub{
   margin:15px 0 0;font-size:13.5px;font-weight:500;
-  line-height:1.42;color:var(--navy);max-width:78%;
+  line-height:1.42;color:var(--navy);max-width:40%;
 }
 
-/* The source photograph is landscape with a wide blank margin on the left.
-   Cropping that margin away gives the taller, squarer framing the design
-   wants — and lets the art hang low enough to notch the prize card below. */
+/* The photograph sits clear of the copy column — no text runs over it, and
+   it is shown whole. It needs no blend mode: the cut-out already sits on the
+   page colour, and multiplying two identical off-whites would darken the
+   ground into a visible block. */
 .hero__art{
-  position:absolute;top:6px;right:calc(-1 * var(--gutter) - 6px);
-  width:64%;aspect-ratio:1/1.34;margin:0;z-index:2;
-  overflow:hidden;   /* clips the crop, and contains alt text if the file is absent */
+  position:absolute;top:6px;right:0;
+  width:56%;margin:0;z-index:2;
 }
-/* The photograph is a soft-edged cut-out on white. Multiply drops that white
-   into the cream page, so there is no halo and the headline stays legible
-   where it crosses the sky. */
-.waterpark{
-  display:block;width:100%;height:100%;
-  object-fit:cover;object-position:74% 50%;
-  mix-blend-mode:multiply;
-}
+/* Never cropped. The painterly edges fade into the page colour, and any crop
+   cuts a hard line through the sky wash or the foliage. */
+.waterpark{display:block;width:100%;height:auto}
 /* A hidden img must stay hidden: display:block above would otherwise win
    over the user agent[hidden] rule and render the alt text. */
-img[hidden]{display:none !important}   /* wins over the per-image display rules below */
+img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the per-image display rules below */
 
 /* Drawn stand-in, sitting behind the photograph. Visible only while
    art/waterpark.png is absent — the photo covers it once it is there. */
 .hero__art .art-fallback{
-  position:absolute;top:0;left:0;right:0;
-  width:100%;height:86%;   /* stops short of the prize card copy below */
+  position:absolute;top:10px;left:8%;right:0;
+  width:82%;height:auto;
 }
 .hero__art .waterpark{position:relative}
 
@@ -151,20 +140,25 @@ img[hidden]{display:none !important}   /* wins over the per-image display rules 
   margin:0;font-weight:700;font-size:16.5px;
   line-height:1.36;letter-spacing:-.015em;color:var(--navy);
 }
-/* The prize copy is set verbatim, and "Round-trip coach airfare" is too long to
-   sit three-up on a phone — so the items stack into rows and go three-up only
-   once there is room. */
+/* Three across, with the icon above its label: the copy is set verbatim and
+   "accommodations" alone needs ~70px, which a column cannot give it with the
+   icon sitting alongside. */
 .prize__list{
-  display:grid;gap:9px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:11px;
   list-style:none;margin:16px 0 0;padding:0;
 }
-.prize__list li{display:flex;align-items:center;gap:9px}
-.prize__list span{font-size:12.5px;font-weight:600;line-height:1.25;color:var(--navy)}
-@media (min-width:430px){
-  .prize__list{grid-template-columns:repeat(3,1fr);gap:10px}
-  .prize__list span{font-size:11px}
+.prize__list li{display:block}
+.prize__list span{
+  display:block;font-size:10.5px;font-weight:600;
+  line-height:1.3;color:var(--navy);
 }
-.ico{flex:0 0 auto;width:22px;height:22px;color:var(--coral)}
+.ico{display:block;width:21px;height:21px;color:var(--coral);margin:0 0 7px}
+
+@media (min-width:420px){
+  .prize__list{gap:13px}
+  .prize__list span{font-size:11.5px}
+  .ico{width:23px;height:23px}
+}
 
 /* ── Raffle ── */
 .raffle{
@@ -176,9 +170,15 @@ img[hidden]{display:none !important}   /* wins over the per-image display rules 
 .raffle p{margin:0;font-size:11.5px;line-height:1.42;color:var(--navy)}
 .raffle strong{font-weight:700}
 .raffle a{color:var(--navy);text-decoration:underline;text-underline-offset:2px}
+.raffle a + br + a{display:inline-block;margin-top:3px}
 
 /* ── How to join ── */
-.join{margin-top:26px}
+.join{margin-top:30px}
+.join__title{
+  margin:0 0 14px;text-align:center;
+  font-weight:700;font-size:clamp(20px,5.6vw,25px);
+  line-height:1.13;letter-spacing:-.025em;color:var(--navy);
+}
 .steps{
   display:grid;grid-template-columns:repeat(3,1fr);gap:9px;
   list-style:none;margin:0;padding:0;
@@ -200,36 +200,15 @@ img[hidden]{display:none !important}   /* wins over the per-image display rules 
 .step__t{margin:0;font-size:11.5px;font-weight:600;line-height:1.32;color:var(--navy)}
 .step__s{margin:3px 0 0;font-size:9.5px;font-weight:500;line-height:1.28;color:var(--navy)}
 
-.join__cta{
-  margin:20px 0 0;font-size:14px;font-weight:500;
-  line-height:1.45;color:var(--navy);
-}
-.join__cta strong{font-weight:700}
-
 /* ── Carousel ── */
-.templates{margin-top:18px}
+.templates{margin-top:26px}
 .carousel{position:relative}
 
-.nav{
-  position:absolute;top:56%;transform:translateY(-50%);
-  width:38px;height:38px;border-radius:50%;
-  background:var(--white);border:1px solid var(--card-line);
-  color:var(--navy);display:flex;align-items:center;justify-content:center;
-  cursor:pointer;padding:0;z-index:3;
-  box-shadow:0 1px 3px rgba(20,42,94,.06);
-  -webkit-tap-highlight-color:transparent;
-}
-.nav svg{width:17px;height:17px}
-.nav:active{background:#f6f3ec}
-.nav--prev{left:-15px}
-.nav--next{right:-15px}
-
+/* White frame around the whole post, with the image inset inside it. */
 .li-card{
   background:var(--white);border:1px solid var(--card-line);
-  border-radius:16px;margin:0 32px;overflow:hidden;
+  border-radius:16px;padding:13px;
 }
-.li-card__top,.li-post{padding-left:14px;padding-right:14px}
-.li-card__top{padding-top:14px}
 .li-card__top{display:flex;align-items:center;justify-content:space-between}
 .li-mark{flex:0 0 auto;width:27px;height:27px;display:block}
 .li-mark svg{display:block;width:100%;height:100%}
@@ -249,8 +228,8 @@ img[hidden]{display:none !important}   /* wins over the per-image display rules 
 }
 
 .selfie{
-  position:relative;margin-top:10px;overflow:hidden;
-  aspect-ratio:4/3;background:#f4efe9;
+  position:relative;margin-top:12px;overflow:hidden;
+  border-radius:9px;aspect-ratio:1/1;background:#f4efe9;
 }
 /* Four booth selfies stacked in the same frame; the carousel cross-fades
    between them so each template preview looks like a different post. */
@@ -272,11 +251,51 @@ img[hidden]{display:none !important}   /* wins over the per-image display rules 
 .pips i{width:6px;height:6px;border-radius:50%;background:#dcdfe6;display:block}
 .pips i.is-on{background:var(--navy)}
 
-/* ── Caption ── */
-.caption{
-  background:var(--white);border:1px solid var(--card-line);
-  border-radius:14px;padding:13px 14px 14px;margin-top:17px;
+.li-react{margin-top:11px}
+.li-react svg{display:block;width:43px;height:auto}
+
+/* ── Caption deck ──
+   One card per template on a horizontal snap track. Cards are narrower than
+   the page so the next one peeks, and the track bleeds past the gutter with a
+   fade on each open edge, so it reads as "there is more this way". */
+.deck-wrap{position:relative;margin-top:17px}
+
+.deck{
+  display:flex;gap:11px;align-items:flex-start;
+  overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  scroll-padding-left:var(--gutter);
+  margin:0 calc(-1 * var(--gutter));
+  padding:2px var(--gutter) 4px;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  transition:height .28s cubic-bezier(.2,.7,.3,1);
 }
+.deck::-webkit-scrollbar{display:none}
+
+/* Fades sit over the bleed, not the gutter, and only when there is more that way. */
+.deck-wrap::before,.deck-wrap::after{
+  content:"";position:absolute;top:0;bottom:0;width:30px;
+  pointer-events:none;z-index:2;opacity:0;transition:opacity .2s ease;
+}
+.deck-wrap::before{
+  left:calc(-1 * var(--gutter));
+  background:linear-gradient(to right,var(--cream) 34%,rgba(250,249,245,0));
+}
+.deck-wrap::after{
+  right:calc(-1 * var(--gutter));
+  background:linear-gradient(to left,var(--cream) 34%,rgba(250,249,245,0));
+}
+.deck-wrap.has-prev::before{opacity:1}
+.deck-wrap.has-next::after{opacity:1}
+
+.caption{
+  flex:0 0 87%;scroll-snap-align:start;
+  background:var(--white);border:1px solid var(--card-line);
+  border-radius:14px;padding:13px 14px 14px;
+  transition:opacity .25s ease;
+}
+.caption:not(.is-on){opacity:.55}
 .caption__n{
   margin:0 0 6px;font-size:11px;font-weight:700;
   letter-spacing:.05em;color:var(--coral);

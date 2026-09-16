@@ -7,22 +7,28 @@
   var RULES_URL = 'https://june.ai/dreamforce';
 
   var LI_COMPOSER = 'https://www.linkedin.com/feed/?shareActive=true&text=';
-  var PIPS = 5;                                  // dots shown in the carousel window
+  var PIPS = 5;                                   // dots shown in the window
   var POSTS = window.JUNE_POSTS || [];
+
+  var COPY_ICON =
+    '<svg class="btn__ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+    '<rect x="8.6" y="8.6" width="11.4" height="12.4" rx="2.6" stroke="currentColor" stroke-width="1.9"/>' +
+    '<path d="M15.4 6.2A2.4 2.4 0 0 0 13 3.8H6.4A2.6 2.6 0 0 0 3.8 6.4v6.8a2.4 2.4 0 0 0 2.4 2.4" ' +
+    'stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>';
 
   /* ── Elements ── */
   var $ = function (id) { return document.getElementById(id); };
-  var draft = $('draft'), num = $('num'), pos = $('pos'), total = $('total');
-  var pips = $('pips'), hint = $('hint'), resetBtn = $('reset'), status = $('status');
-  var prevBtn = $('prev'), nextBtn = $('next'), copyBtn = $('copy'), shareBtn = $('share');
+  var deck = $('deck'), wrap = document.querySelector('.deck-wrap');
   var preview = $('preview'), tags = $('tags');
+  var pos = $('pos'), total = $('total'), pips = $('pips'), status = $('status');
+  var shareBtn = $('share');
   var shots = document.querySelectorAll('.selfie .shot');
 
   /* ── State ── */
-  var i = 0;              // current template
-  var edited = false;     // has the visitor changed the caption?
-  var armed = false;      // arrow tapped once while edited
+  var i = 0;              // active template
+  var cards = [];         // one per template
   var timer = null;
+  var raf = 0;
 
   /* ── Helpers ── */
   function pad(n) { return (n < 10 ? '0' : '') + n; }
@@ -33,9 +39,9 @@
     if (msg) timer = setTimeout(function () { status.textContent = ''; }, 2600);
   }
 
-  function grow() {
-    draft.style.height = 'auto';
-    draft.style.height = draft.scrollHeight + 'px';
+  function grow(ta) {
+    ta.style.height = 'auto';
+    ta.style.height = ta.scrollHeight + 'px';
   }
 
   /* Hashtags live on their own trailing line; LinkedIn renders them blue. */
@@ -57,13 +63,13 @@
     var cut = flat.slice(0, max);
     var space = cut.lastIndexOf(' ');
     if (space > max * 0.6) cut = cut.slice(0, space);
-    return { text: cut.replace(/[,.;:\u2014-]+$/, ''), cut: true };
+    return { text: cut.replace(/[,.;:—-]+$/, ''), cut: true };
   }
 
   function drawPreview(text) {
     var parts = split(text);
     var shown = clip(parts.body, 108);
-    preview.textContent = shown.text + (shown.cut ? '\u2026 ' : '');
+    preview.textContent = shown.text + (shown.cut ? '… ' : '');
     if (shown.cut) {
       var more = document.createElement('span');
       more.className = 'more';
@@ -93,31 +99,50 @@
     }
   }
 
-  /* ── Render ── */
-  function render() {
-    draft.value = POSTS[i].text;
-    drawShot();
-    drawPreview(draft.value);
-    num.textContent = pad(i + 1);
-    pos.textContent = i + 1;
-    edited = false;
-    armed = false;
-    resetBtn.hidden = true;
-    hint.textContent = 'Tap the text to make it yours';
-    grow();
-    drawPips();
+  /* The track is as tall as the card in view, so short captions don't leave
+     a gap above the button and long ones aren't cut off. */
+  function fitHeight() {
+    if (!cards[i]) return;
+    deck.style.height = cards[i].el.offsetHeight + 'px';
   }
 
-  function go(step) {
-    /* Guard the visitor's own writing behind a second tap. */
-    if (edited && !armed) {
-      armed = true;
-      say('Tap again to discard your edits');
-      return;
-    }
-    i = (i + step + POSTS.length) % POSTS.length;
-    render();
-    say('');
+  function drawFades() {
+    var max = deck.scrollWidth - deck.clientWidth;
+    wrap.classList.toggle('has-prev', deck.scrollLeft > 4);
+    wrap.classList.toggle('has-next', deck.scrollLeft < max - 4);
+  }
+
+  /* ── Active card ── */
+  function setActive(next) {
+    if (next === i || !cards[next]) return;
+    cards[i].el.classList.remove('is-on');
+    i = next;
+    cards[i].el.classList.add('is-on');
+    pos.textContent = i + 1;
+    drawPreview(cards[i].ta.value);
+    drawPips();
+    drawShot();
+    fitHeight();
+  }
+
+  /* Which card is nearest the track's left edge? */
+  function nearest() {
+    var step = cards[0].el.offsetWidth + 11;              // card + gap
+    return Math.max(0, Math.min(cards.length - 1, Math.round(deck.scrollLeft / step)));
+  }
+
+  deck.addEventListener('scroll', function () {
+    if (raf) return;
+    raf = requestAnimationFrame(function () {
+      raf = 0;
+      drawFades();
+      setActive(nearest());
+    });
+  });
+
+  function scrollTo(k) {
+    var step = cards[0].el.offsetWidth + 11;
+    deck.scrollTo({ left: k * step, behavior: 'smooth' });
   }
 
   /* ── Copy ── */
@@ -148,41 +173,64 @@
     });
   }
 
-  /* ── Wiring ── */
-  prevBtn.addEventListener('click', function () { go(-1); });
-  nextBtn.addEventListener('click', function () { go(1); });
+  /* ── Build the deck ── */
+  function build() {
+    var frag = document.createDocumentFragment();
 
-  draft.addEventListener('input', function () {
-    grow();
-    drawPreview(draft.value);
-    armed = false;
-    if (!edited) {
-      edited = true;
-      resetBtn.hidden = false;
-      hint.textContent = 'Edited by you';
-    }
-  });
+    POSTS.forEach(function (post, k) {
+      var el = document.createElement('article');
+      el.className = 'caption';
+      el.innerHTML =
+        '<p class="caption__n">' + pad(k + 1) + '</p>' +
+        '<label class="sr-only" for="draft-' + k + '">Caption ' + (k + 1) + '</label>' +
+        '<textarea id="draft-' + k + '" class="caption__text" rows="4" spellcheck="true" ' +
+        'autocapitalize="sentences"></textarea>' +
+        '<p class="caption__meta">' +
+        '<button class="linkish" type="button" hidden>Undo edits</button></p>' +
+        '<button class="btn btn--ghost" type="button">' + COPY_ICON + 'Copy text</button>';
 
-  resetBtn.addEventListener('click', function () {
-    draft.value = POSTS[i].text;
-    drawPreview(draft.value);
-    edited = false;
-    armed = false;
-    resetBtn.hidden = true;
-    hint.textContent = 'Tap the text to make it yours';
-    grow();
-    say('Edits undone');
-  });
+      var ta = el.querySelector('textarea');
+      var undo = el.querySelector('.linkish');
+      var copy = el.querySelector('.btn--ghost');
 
-  copyBtn.addEventListener('click', function () {
-    copyText(draft.value).then(function () { say('Caption copied'); });
-  });
+      ta.value = post.text;
+
+      ta.addEventListener('input', function () {
+        grow(ta);
+        fitHeight();
+        if (undo.hidden) undo.hidden = false;
+        if (k === i) drawPreview(ta.value);
+      });
+
+      undo.addEventListener('click', function () {
+        ta.value = post.text;
+        undo.hidden = true;
+        grow(ta);
+        fitHeight();
+        if (k === i) drawPreview(ta.value);
+        say('Edits undone');
+      });
+
+      copy.addEventListener('click', function () {
+        copyText(ta.value).then(function () { say('Caption copied'); });
+      });
+
+      /* Bring a half-visible card fully into view when it's tapped. */
+      el.addEventListener('focusin', function () { if (k !== i) scrollTo(k); });
+
+      frag.appendChild(el);
+      cards.push({ el: el, ta: ta });
+    });
+
+    deck.appendChild(frag);
+    cards.forEach(function (c) { grow(c.ta); });
+  }
 
   /* "Open LinkedIn" — the device's own share sheet where there is one
      (picking LinkedIn prefills the composer), otherwise copy the caption
      and open the web composer, so the text is always in hand. */
   shareBtn.addEventListener('click', function () {
-    var text = draft.value;
+    var text = cards[i] ? cards[i].ta.value : '';
 
     if (navigator.share) {
       navigator.share({ text: text })['catch'](function (err) {
@@ -195,18 +243,32 @@
     copyThenOpen(text);
   });
 
-  window.addEventListener('resize', grow);
+  window.addEventListener('resize', function () {
+    cards.forEach(function (c) { grow(c.ta); });
+    fitHeight();
+    drawFades();
+  });
 
   /* ── Start ── */
-  $('rules').href = RULES_URL;
+  var ruleLinks = document.querySelectorAll('.rules-link');
+  for (var r = 0; r < ruleLinks.length; r++) ruleLinks[r].href = RULES_URL;
   total.textContent = POSTS.length;
 
   if (!POSTS.length) {
-    draft.placeholder = 'No templates loaded.';
     say('No templates loaded');
-  } else {
-    i = Math.floor(Math.random() * POSTS.length);   // a fresh one for each visitor
-    render();
+    return;
   }
+
+  build();
+
+  i = Math.floor(Math.random() * POSTS.length);     // a fresh one for each visitor
+  cards[i].el.classList.add('is-on');
+  pos.textContent = i + 1;
+  drawPreview(cards[i].ta.value);
+  drawPips();
+  drawShot();
+  fitHeight();
+  deck.scrollLeft = i * (cards[0].el.offsetWidth + 11);
+  drawFades();
 
 })();

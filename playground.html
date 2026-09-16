@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>How to join — variations · June at Dreamforce 26</title>
 <meta name="description" content="Three larger, more engaging treatments of the How to join step sequence.">
-<meta name="theme-color" content="#fdfbf1">
+<meta name="theme-color" content="#faf9f5">
 <meta name="color-scheme" content="light">
 <meta name="robots" content="noindex">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23142a5e'/%3E%3Cpath d='M4 20c3-4 5-4 8 0s5 4 8 0 5-4 8 0' stroke='%23fb5b5b' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
@@ -87,6 +87,91 @@
   .vB li{padding:14px 8px}
   .vB .t{font-size:15px}
 }
+
+/* ── D · Numbered lines ── */
+.vD{list-style:none;margin:0;padding:0}
+.vD li{
+  display:flex;align-items:baseline;gap:14px;
+  padding:15px 0;border-bottom:1px solid #ece4d3;
+}
+.vD li:last-child{border-bottom:0}
+.vD .n{
+  flex:0 0 auto;width:20px;
+  font-size:15px;font-weight:700;color:var(--coral);
+}
+.vD .t{
+  margin:0;font-weight:700;font-size:clamp(20px,5.6vw,25px);
+  line-height:1.13;letter-spacing:-.025em;color:var(--navy);
+}
+.vD .s{margin:2px 0 0;font-size:12.5px;font-weight:500;color:var(--muted)}
+
+/* ── E · Centred stack ── */
+.vE{list-style:none;margin:0;padding:0;text-align:center}
+.vE li{padding:16px 0}
+.vE li + li{border-top:1px solid #ece4d3}
+.vE .n{
+  display:block;margin-bottom:5px;
+  font-size:10px;font-weight:700;letter-spacing:.2em;color:var(--coral);
+}
+.vE .t{
+  margin:0;font-weight:700;font-size:clamp(20px,5.6vw,25px);
+  line-height:1.13;letter-spacing:-.025em;color:var(--navy);
+}
+.vE .s{margin:4px 0 0;font-size:12.5px;font-weight:500;color:var(--muted)}
+
+/* ── F · One typographic block ── */
+.vF{
+  margin:0;font-weight:700;font-size:clamp(22px,6.2vw,28px);
+  line-height:1.24;letter-spacing:-.025em;color:var(--navy);
+}
+.vF b{font-weight:700;color:var(--coral);margin-right:.24em}
+.vF span{display:block}
+.vF .s{
+  display:block;margin-top:10px;
+  font-size:12.5px;font-weight:500;letter-spacing:0;color:var(--muted);
+}
+
+/* ── G · Small numerals, airy ── */
+.vG{
+  margin:0;font-weight:700;font-size:clamp(22px,6.2vw,28px);
+  line-height:1.2;letter-spacing:-.025em;color:var(--navy);
+}
+.vG span{display:block;margin-bottom:22px}
+.vG span:last-of-type{margin-bottom:0}
+.vG b{
+  font-size:.42em;font-weight:700;color:var(--coral);
+  vertical-align:.95em;margin-right:.5em;letter-spacing:.04em;
+}
+.vG .s{
+  display:block;margin-top:6px;
+  font-size:12.5px;font-weight:500;letter-spacing:0;color:var(--muted);
+}
+
+/* ── H · Hanging numerals ── */
+.vH{list-style:none;margin:0;padding:0}
+.vH li{display:flex;align-items:baseline;gap:16px;margin-bottom:26px}
+.vH li:last-child{margin-bottom:0}
+.vH .n{
+  flex:0 0 16px;font-size:11px;font-weight:700;
+  color:var(--coral);letter-spacing:.06em;
+}
+.vH .t{
+  margin:0;font-weight:700;font-size:clamp(21px,5.9vw,26px);
+  line-height:1.16;letter-spacing:-.025em;color:var(--navy);
+}
+
+/* ── I · Numerals above ── */
+.vI{list-style:none;margin:0;padding:0}
+.vI li{margin-bottom:28px}
+.vI li:last-child{margin-bottom:0}
+.vI .n{
+  display:block;margin-bottom:7px;
+  font-size:10px;font-weight:700;letter-spacing:.22em;color:var(--coral);
+}
+.vI .t{
+  margin:0;font-weight:700;font-size:clamp(21px,5.9vw,26px);
+  line-height:1.16;letter-spacing:-.025em;color:var(--navy);
+}
 </style>
 </head>
 <body>
@@ -160,6 +245,80 @@
         <span class="n n--3">3</span>
         <div><p class="t">Post to LinkedIn</p><p class="s">That&rsquo;s your entry in</p></div>
       </li>
+    </ol>
+  </section>
+
+  <hr class="pg-rule">
+
+  <!-- ══ D ══ -->
+  <section class="pg-block">
+    <p class="pg-tag">Option D <b>Numbered lines</b></p>
+    <ol class="vD">
+      <li><span class="n">1</span><div><p class="t">Snap a selfie</p><p class="s">At the June booth wall</p></div></li>
+      <li><span class="n">2</span><div><p class="t">Add a caption</p><p class="s">Yours, or one of ours</p></div></li>
+      <li><span class="n">3</span><div><p class="t">Post to LinkedIn</p><p class="s">That&rsquo;s your entry in</p></div></li>
+    </ol>
+  </section>
+
+  <hr class="pg-rule">
+
+  <!-- ══ E ══ -->
+  <section class="pg-block">
+    <p class="pg-tag">Option E <b>Centred stack</b></p>
+    <ol class="vE">
+      <li><span class="n">Step 1</span><p class="t">Snap a selfie</p><p class="s">At the June booth wall</p></li>
+      <li><span class="n">Step 2</span><p class="t">Add a caption</p><p class="s">Yours, or one of ours</p></li>
+      <li><span class="n">Step 3</span><p class="t">Post to LinkedIn</p><p class="s">That&rsquo;s your entry in</p></li>
+    </ol>
+  </section>
+
+  <hr class="pg-rule">
+
+  <!-- ══ F ══ -->
+  <section class="pg-block">
+    <p class="pg-tag">Option F <b>One block</b></p>
+    <p class="vF">
+      <span><b>1</b>Snap a selfie.</span>
+      <span><b>2</b>Add a caption.</span>
+      <span><b>3</b>Post to LinkedIn.</span>
+      <span class="s">That&rsquo;s your entry in.</span>
+    </p>
+  </section>
+
+  <hr class="pg-rule">
+
+  <!-- ══ G ══ -->
+  <section class="pg-block">
+    <p class="pg-tag">Option G <b>Small numerals, airy</b></p>
+    <p class="vG">
+      <span><b>1</b>Snap a selfie.</span>
+      <span><b>2</b>Add a caption.</span>
+      <span><b>3</b>Post to LinkedIn.</span>
+      <span class="s">That&rsquo;s your entry in.</span>
+    </p>
+  </section>
+
+  <hr class="pg-rule">
+
+  <!-- ══ H ══ -->
+  <section class="pg-block">
+    <p class="pg-tag">Option H <b>Hanging numerals</b></p>
+    <ol class="vH">
+      <li><span class="n">01</span><p class="t">Snap a selfie</p></li>
+      <li><span class="n">02</span><p class="t">Add a caption</p></li>
+      <li><span class="n">03</span><p class="t">Post to LinkedIn</p></li>
+    </ol>
+  </section>
+
+  <hr class="pg-rule">
+
+  <!-- ══ I ══ -->
+  <section class="pg-block">
+    <p class="pg-tag">Option I <b>Numerals above</b></p>
+    <ol class="vI">
+      <li><span class="n">Step 1</span><p class="t">Snap a selfie</p></li>
+      <li><span class="n">Step 2</span><p class="t">Add a caption</p></li>
+      <li><span class="n">Step 3</span><p class="t">Post to LinkedIn</p></li>
     </ol>
   </section>
 
