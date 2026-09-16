@@ -81,8 +81,12 @@ body{
   display:grid;grid-template-columns:1fr;
   padding-top:18px;
 }
+/* Headline and standfirst share one cell with the picture, rather than taking
+   a grid row each. A picture spanning two rows pushes the extra it needs into
+   both of them, which opened a gap under the headline that no margin asked
+   for; in a single cell the only space between them is the margin below. */
+.hero__copy{grid-area:1/1;z-index:3}
 .hero__title{
-  grid-area:1/1;z-index:3;
   margin:0;font-weight:700;font-size:clamp(21px,6.2vw,28px);
   line-height:1.1;letter-spacing:-.032em;color:var(--navy);
   /* Held clear of the picture: it breaks to more lines rather than running
@@ -92,30 +96,29 @@ body{
 /* Held to a measure that keeps it inside the dissolved edge — past that the
    foliage is dark enough to pull the contrast under AA. */
 .hero__sub{
-  grid-area:2/1;z-index:3;
-  margin:15px 0 0;max-width:47%;
+  margin:14px 0 0;max-width:47%;
   font-size:clamp(14px,4.1vw,16px);font-weight:500;
   line-height:1.38;color:var(--navy);
 }
 
-/* The negative margin lifts the picture into the headline's last line, which
-   crosses only the top strip of sky. It needs no blend mode: the cut-out
+/* The top margin drops the picture clear of the headline's first lines, so the
+   words cross only the top strip of sky. It needs no blend mode: the cut-out
    already sits on the page colour, and multiplying two identical off-whites
    would darken the ground into a visible block. */
 .hero__art{
   /* Spans the headline and sub rows so it can be large and hang low, the way
      the reference does. The left edge is masked to nothing, so the copy that
      crosses it sits on clean page colour rather than on the picture. */
-  grid-area:1/1/3/2;z-index:1;
+  grid-area:1/1;z-index:1;
   justify-self:end;align-self:start;
-  width:86%;margin:-8px calc(-1 * var(--gutter)) 0 0;
+  width:86%;margin:26px calc(-1 * var(--gutter)) 0 0;
   -webkit-mask-image:linear-gradient(to right,transparent 0,rgba(0,0,0,.4) 20%,#000 42%);
           mask-image:linear-gradient(to right,transparent 0,rgba(0,0,0,.4) 20%,#000 42%);
 }
 /* Without a mask the copy would meet the picture at full strength. Pull it
    clear instead: smaller, hard right, below the headline. */
 @supports not ((-webkit-mask-image:linear-gradient(#000,#000)) or (mask-image:linear-gradient(#000,#000))){
-  .hero__art{width:50%;margin-top:6px}
+  .hero__art{width:50%;margin-top:20px}
   .hero__sub{max-width:44%}
 }
 /* Never cropped. The painterly edges fade into the page colour, and any crop
@@ -134,9 +137,12 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 .hero__art .waterpark{position:relative}
 
 /* ── Grand prize ── */
+/* Pulled up over the foot of the picture: the card's top edge covers the last
+   of the foliage, which is where the cut-out is already dissolving into the
+   page. Later in the source at the same z-index, so it paints over the art. */
 .prize{
   position:relative;z-index:1;
-  margin-top:22px;
+  margin-top:-20px;
   background:var(--pink);border-radius:19px;
   padding:16px 18px 18px;
 }
@@ -217,21 +223,33 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 /* ── Post samples ── */
 .templates{margin-top:26px}
 .templates__label{margin-bottom:9px;text-align:center}
-/* A dealt deck, not a list: the three samples sit one on top of the next,
-   each turned a degree or two off square, so the group reads as a pile of
-   cards at a glance. Enough of each card below shows for its caption to be
-   read, and the square crop matches what a LinkedIn photo post looks like. */
-.samples{position:relative;padding:10px 0 6px}
+/* A dealt deck, not a list: the three samples are collected into one compact
+   patch, fanned wide rather than tall — each card is dropped a tab's height
+   below the one behind and pushed well off-centre, so the group is short
+   enough to take in at a glance and every card still shows its mark, its
+   near edge and a column of its photograph. The square crop matches what a
+   LinkedIn photo post looks like.
+
+   The two behind are positioned rather than stacked with negative margins:
+   captions run to one line or two depending on the post, so only fixed tops
+   keep the exposed tabs the same height on every load. The front card stays
+   in flow, so the section is exactly as tall as the deck. */
+.samples{position:relative;padding:8px 0 6px}
+/* 70% leaves room for the fan: the outer cards reach into the page gutter
+   and stop short of the screen edge, measured down to a 320px screen. */
 .samples .li-card{
-  position:relative;
-  width:78%;margin-left:auto;margin-right:auto;padding:10px;
-  box-shadow:0 8px 22px rgba(20,42,94,.13);
+  position:absolute;top:0;
+  width:70%;padding:10px;
+  box-shadow:0 10px 26px rgba(20,42,94,.15);
   transform-origin:50% 50%;
 }
-.samples .li-card + .li-card{margin-top:-72%}
-.samples .li-card:nth-child(1){z-index:1;transform:translateX(-3%) rotate(-3.2deg)}
-.samples .li-card:nth-child(2){z-index:2;transform:translateX(4%) rotate(2.4deg)}
-.samples .li-card:nth-child(3){z-index:3;transform:translateX(-1%) rotate(-1.3deg)}
+.samples .li-card:nth-child(1){left:-3%;top:0;z-index:1;transform:rotate(-6.5deg)}
+.samples .li-card:nth-child(2){left:33%;top:40px;z-index:2;transform:rotate(5deg)}
+/* The front card is centred and in flow — it sets the container's height. */
+.samples .li-card:nth-child(3){
+  position:relative;left:0;margin:80px auto 0;
+  z-index:3;transform:rotate(-1.5deg);
+}
 
 /* Compact: a short caption, a square crop, small marks. */
 .samples .li-card__top{align-items:center}
@@ -256,7 +274,9 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 .li-card__top{display:flex;align-items:center;justify-content:space-between}
 .li-mark{flex:0 0 auto;width:27px;height:27px;display:block}
 .li-mark svg{display:block;width:100%;height:100%}
-.li-mark--btn{width:21px;height:21px;border-radius:4px;overflow:hidden}
+/* No LinkedIn blue on the navy button: the tile is white and the letters are
+   knocked out of it in the button's own navy. */
+.li-mark--btn{width:21px;height:21px;color:var(--white)}
 .li-dots{width:19px;display:block;color:#5d6470}
 .li-dots svg{display:block;width:100%;height:auto}
 
@@ -280,13 +300,10 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
   object-fit:cover;object-position:50% 30%;
 }
 
-.count{
-  margin:13px 0 0;text-align:center;
-  font-size:12px;font-weight:600;color:var(--navy);
-}
-.pips{display:flex;justify-content:center;gap:7px;margin-top:8px}
+.pips{display:flex;justify-content:center;gap:7px;margin-top:14px}
 .pips i{width:6px;height:6px;border-radius:50%;background:#dcdfe6;display:block}
 .pips i.is-on{background:var(--navy)}
+.pips i.is-edge{width:4px;height:4px;align-self:center;opacity:.7}
 
 .li-react{margin-top:11px}
 .li-react svg{display:block;width:43px;height:auto}
@@ -305,6 +322,23 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
    One card per template on a horizontal snap track. Cards are narrower than
    the page so the next one peeks, and the track bleeds past the gutter with a
    fade on each open edge, so it reads as "there is more this way". */
+/* Navigation sits above the cards, right aligned — the deck also swipes. */
+.deck-nav{
+  display:flex;justify-content:flex-end;gap:8px;
+  margin-top:12px;
+}
+.nav{
+  width:34px;height:34px;border-radius:50%;
+  background:var(--white);border:1px solid var(--card-line);
+  color:var(--navy);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;padding:0;
+  -webkit-tap-highlight-color:transparent;
+  transition:opacity .15s ease,background .15s ease;
+}
+.nav svg{width:16px;height:16px}
+.nav:active{background:#f6f3ec}
+.nav:disabled{opacity:.32;cursor:default}
+
 .deck-wrap{position:relative;margin-top:15px}
 
 .deck{

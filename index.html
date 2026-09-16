@@ -25,11 +25,12 @@
   <!-- ══════════ Hero ══════════ -->
   <section class="hero">
 
-    <h1 class="hero__title">
-      Take a selfie.<br>Win a 2-night trip to Noah&rsquo;s Ark Waterpark.
-    </h1>
-
-    <p class="hero__sub">Post about June on LinkedIn for a chance to win.</p>
+    <div class="hero__copy">
+      <h1 class="hero__title">
+        Take a selfie.<br>Win a 2-night trip to Noah&rsquo;s Ark Waterpark.
+      </h1>
+      <p class="hero__sub">Post about June on LinkedIn for a chance to win.</p>
+    </div>
 
     <figure class="hero__art">
       <!-- Drawn stand-in. The photograph sits on top of it and hides itself if
@@ -246,16 +247,24 @@
     <p class="deck__sub">Or create your own</p>
 
     <!-- ══ Caption deck — one card per template, swipe sideways ══ -->
+    <div class="deck-nav">
+      <button class="nav" id="prev" type="button" aria-label="Previous message">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="nav" id="next" type="button" aria-label="Next message">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
     <div class="deck-wrap">
       <div class="deck" id="deck" role="group" aria-label="Caption templates — scroll sideways for more"></div>
     </div>
 
-    <p class="count"><span id="pos">1</span> / <span id="total">39</span></p>
     <div class="pips" id="pips" aria-hidden="true"></div>
 
     <button class="btn btn--navy" id="share" type="button">
       <span class="li-mark li-mark--btn" aria-hidden="true">
-        <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4.5" fill="#fff"/><path d="M7.12 20.45H3.56V9h3.56zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29z" fill="#0a66c2"/></svg>
+        <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4.5" fill="currentColor"/><path d="M7.12 20.45H3.56V9h3.56zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29z" fill="var(--navy-900)"/></svg>
       </span>
       Open LinkedIn
     </button>

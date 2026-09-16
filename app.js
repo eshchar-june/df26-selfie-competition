@@ -19,7 +19,9 @@
   /* ── Elements ── */
   var $ = function (id) { return document.getElementById(id); };
   var deck = $('deck'), wrap = document.querySelector('.deck-wrap');
-  var pos = $('pos'), total = $('total'), pips = $('pips'), status = $('status');
+  var pips = $('pips'), status = $('status');
+  var prevBtn = $('prev'), nextBtn = $('next');
+  var navTarget = 0, navUntil = 0;   /* chevron intent, held while a smooth scroll runs */
   var shareBtn = $('share');
   var samples = document.querySelectorAll('.samples .li-card');
 
@@ -97,7 +99,12 @@
     var start = Math.max(0, Math.min(i - half, POSTS.length - n));
     var html = '';
     for (var k = 0; k < n; k++) {
-      html += '<i class="' + (start + k === i ? 'is-on' : '') + '"></i>';
+      var cls = start + k === i ? 'is-on' : '';
+      /* Taper the end dots when the window has more behind it, the way a page
+         control signals "there is more this way". */
+      if (k === 0 && start > 0) cls += ' is-edge';
+      if (k === n - 1 && start + n < POSTS.length) cls += ' is-edge';
+      html += '<i class="' + cls.trim() + '"></i>';
     }
     pips.innerHTML = html;
   }
@@ -121,8 +128,9 @@
     cards[i].el.classList.remove('is-on');
     i = next;
     cards[i].el.classList.add('is-on');
-    pos.textContent = i + 1;
+    if (Date.now() > navUntil) navTarget = i;
     drawPips();
+    drawNav();
     fitHeight();
   }
 
@@ -140,6 +148,12 @@
       setActive(nearest());
     });
   });
+
+  function drawNav() {
+    var at = Date.now() > navUntil ? i : navTarget;
+    prevBtn.disabled = at === 0;
+    nextBtn.disabled = at === cards.length - 1;
+  }
 
   function scrollTo(k) {
     var step = cards[0].el.offsetWidth + 11;
@@ -270,6 +284,20 @@
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(regrow);
   window.addEventListener('load', regrow);
 
+  /* A smooth scroll takes a moment to settle, and i only catches up when it
+     does. Stepping from i alone means a second tap recomputes from the old
+     card and goes nowhere, so the chevrons step from their own target and
+     hand it back to the scroll position once the movement has finished. */
+  function step(by) {
+    navTarget = Math.max(0, Math.min(cards.length - 1, navTarget + by));
+    navUntil = Date.now() + 700;
+    scrollTo(navTarget);
+    drawNav();
+  }
+
+  prevBtn.addEventListener('click', function () { step(-1); });
+  nextBtn.addEventListener('click', function () { step(1); });
+
   window.addEventListener('resize', function () {
     cards.forEach(function (c) { grow(c.ta); grow(c.tags); });
     fitHeight();
@@ -279,7 +307,6 @@
   /* ── Start ── */
   var ruleLinks = document.querySelectorAll('.rules-link');
   for (var r = 0; r < ruleLinks.length; r++) ruleLinks[r].href = RULES_URL;
-  total.textContent = POSTS.length;
 
   if (!POSTS.length) {
     say('No templates loaded');
@@ -291,8 +318,9 @@
 
   i = Math.floor(Math.random() * POSTS.length);     // a fresh one for each visitor
   cards[i].el.classList.add('is-on');
-  pos.textContent = i + 1;
+  navTarget = i;
   drawPips();
+  drawNav();
   fitHeight();
   deck.scrollLeft = i * (cards[0].el.offsetWidth + 11);
   drawFades();
