@@ -10,3 +10,4 @@ node_modules/
 # Source photographs — large originals, kept local. The compressed
 # selfie-*.jpg files next to them are what the build embeds.
 art/image-*.png
+art/hero-image.png
