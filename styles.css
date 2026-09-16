@@ -73,7 +73,9 @@ body{
   color:var(--navy);   /* June's own wordmark, drawn with currentColor */
 }
 .masthead__where{
-  margin:1px 0 0;text-align:right;
+  /* Negative, not zero: the wordmark's box is pure glyph, while this 9px
+     text carries about 3px of leading above its cap height. */
+  margin:-3px 0 0;text-align:right;
   font-size:9px;font-weight:700;line-height:1.4;
   letter-spacing:.12em;text-transform:uppercase;color:var(--navy);
 }
@@ -88,6 +90,12 @@ body{
   padding-top:44px;
 }
 .hero__copy{position:relative;z-index:3}
+.hero__eyebrow{
+  /* Carries .label label--coral for the grand-prize treatment; this rule only
+     centres it and gives the tracked caps room to wrap evenly. */
+  margin:0 auto 12px;max-width:24em;text-align:center;line-height:1.5;
+}
+
 /* Centred, and sized so the hand-placed break after "Take a selfie." is
    followed by two lines of near-equal length rather than by a last line
    carrying one word. */
