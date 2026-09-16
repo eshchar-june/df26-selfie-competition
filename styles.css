@@ -201,8 +201,10 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 .join__steps li{padding:0 8px;text-align:center}
 .join__steps li + li{border-left:1px solid #ece4d3}
 .join__steps .n{
-  display:block;margin-bottom:7px;
-  font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--coral);
+  display:flex;align-items:center;justify-content:center;
+  width:26px;height:26px;margin:0 auto 9px;
+  border-radius:50%;background:var(--coral);
+  font-size:12.5px;font-weight:700;line-height:1;color:#fff;
 }
 .join__steps p{
   margin:0;font-size:13px;font-weight:600;
