@@ -19,7 +19,7 @@
   /* ── Elements ── */
   var $ = function (id) { return document.getElementById(id); };
   var deck = $('deck'), wrap = document.querySelector('.deck-wrap');
-  var pips = $('pips'), status = $('status');
+  var pips = $('pips'), status = $('status'), deckStatus = $('deck-status');
   var prevBtn = $('prev'), nextBtn = $('next');
   var navTarget = 0, navUntil = 0;   /* chevron intent, held while a smooth scroll runs */
   var shareBtn = $('share');
@@ -34,10 +34,17 @@
   /* ── Helpers ── */
   function pad(n) { return (n < 10 ? '0' : '') + n; }
 
-  function say(msg) {
-    status.textContent = msg || '';
+  /* Two live regions, because the two controls that speak now sit a screen
+     apart: the deck's own line answers a copy inside step 2, and the one under
+     "Open LinkedIn" answers step 3. Whichever is not speaking is cleared, so a
+     stale message is never left standing further up the page. */
+  function say(msg, el) {
+    var where = el || status;
+    status.textContent = '';
+    if (deckStatus) deckStatus.textContent = '';
+    where.textContent = msg || '';
     clearTimeout(timer);
-    if (msg) timer = setTimeout(function () { status.textContent = ''; }, 2600);
+    if (msg) timer = setTimeout(function () { where.textContent = ''; }, 2600);
   }
 
   function grow(ta) {
@@ -222,11 +229,11 @@
         tags.value = parts.tags;
         undo.hidden = true;
         grow(ta); grow(tags);
-        say('Edits undone');
+        say('Edits undone', deckStatus);
       });
 
       copy.addEventListener('click', function () {
-        copyText(full()).then(function () { say('Post copied'); });
+        copyText(full()).then(function () { say('Post copied', deckStatus); });
       });
 
       /* Bring a half-visible card fully into view when it's tapped. */
@@ -325,7 +332,7 @@
   dealSamples();
 
   if (!POSTS.length) {
-    say('No templates loaded');
+    say('No templates loaded', deckStatus);
     return;
   }
 
