@@ -117,6 +117,12 @@ body{
   margin:-14px calc(-1 * var(--gutter)) 0;
   width:calc(100% + 2 * var(--gutter));
 }
+@media (max-width:400px){
+  /* Narrow screens need the breath under the sub-copy that the negative
+     pull takes away on wider ones. */
+  .hero__art{margin-top:8px}
+}
+
 /* Never cropped. The painterly edges fade into the page colour, and any crop
    cuts a hard line through the sky wash or the foliage. */
 .waterpark{display:block;width:100%;height:auto}
