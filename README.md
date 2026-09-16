@@ -7,12 +7,14 @@ to the OS share sheet, and posts — which enters them in the raffle.
 No framework, no dependencies, no backend, no sign-up. Anyone with the link can use it.
 
 ```
-index.html     markup + the placeholder artwork (inline SVG)
+index.html     markup for the live page
+playground.html  /playground — How-to-join design variations
 styles.css     brand system — navy / coral / cream, type, card styles
 posts.js       the 39 ready-made captions  ← edit copy here
 app.js         carousel / edit / copy / share logic
 fonts/         Sharp Sans (June) · Caveat (marker annotation), subset to woff2
-build.js       bundles all of the above into one file
+art/           waterpark + selfie photographs (not in the repo — see art/README.md)
+build.js       bundles every .html page into one self-contained file each
 dist/          build output — this is what you deploy
 ```
 
@@ -27,13 +29,15 @@ var RULES_URL = 'https://june.ai/dreamforce';   // TODO: real eligibility / offi
 This is the link behind "june.ai/dreamforce" in the raffle banner. For a prize
 promotion it needs to point at the real eligibility and official-rules page.
 
-**2. The placeholder artwork.** Two images in `index.html` are stand-ins, each marked
-with a `PLACEHOLDER ART` comment:
+**2. The artwork.** Two photographs are referenced but not committed — see
+[`art/README.md`](art/README.md):
 
-- **The waterpark** — a drawn SVG standing in for the licensed Noah's Ark photograph.
-  Replace the whole `<svg class="waterpark">` with `<img src="art/waterpark.jpg" alt="Noah's Ark Waterpark">`.
-- **The selfie preview** — a grey silhouette on June's repeating wordmark backdrop. It
-  only previews what the visitor's post will look like, so a real photo is optional.
+- `art/waterpark.png` — Noah's Ark Waterpark, for the hero. Keep its white background;
+  the hero uses `mix-blend-mode: multiply` so that white dissolves into the cream page.
+- `art/selfie.png` — a visitor at the June booth wall, for the LinkedIn post preview.
+
+`build.js` embeds whatever it finds and warns for anything missing, so a build without
+them still succeeds — the page just shows broken images.
 
 ## Run it locally
 
@@ -49,10 +53,14 @@ Then open `http://localhost:4173`. Any static server works.
 node build.js
 ```
 
-That inlines the CSS, the JS, and all four font faces as data URIs, and writes
-**`dist/index.html`** — a single 120 KB file with *zero* network requests. Deploy that
-one file anywhere: Vercel, Netlify Drop, Cloudflare Pages, S3. It renders instantly on
-bad conference wi-fi and keeps working if the wi-fi drops entirely.
+That inlines the CSS, the JS, the font faces and the photographs as data URIs, and
+writes one self-contained file per page into `dist/` — `index.html` and
+`playground.html`, each with *zero* network requests. Deploy the folder anywhere:
+Vercel, Netlify Drop, Cloudflare Pages, S3. It renders instantly on bad conference
+wi-fi and keeps working if the wi-fi drops entirely.
+
+With `cleanUrls` on (already set in `vercel.json`), the variations page is served at
+**`/playground`**.
 
 `vercel.json` is already wired up (`node build.js` → `dist`), so importing the repo into
 Vercel needs no further configuration.
@@ -65,6 +73,10 @@ Two notes:
   with a coffee.
 
 ## How it behaves
+
+**The post preview** shows the caption the way the feed will: clipped at a word
+boundary with a "see more", and the hashtags below it in LinkedIn blue. It follows
+the carousel and updates live as the caption is edited.
 
 **The carousel** steps through all 39 captions with the arrows. The counter reads
 `n / 39` and the five dots below it are a window onto the position, so they stay

@@ -48,37 +48,79 @@ css = css.replace(
 );
 
 
-const src = read('index.html');
-const title = /<title>([\s\S]*?)<\/title>/.exec(src)[1];
-const body  = /<body>([\s\S]*?)<\/body>/.exec(src)[1]
-  .replace(/\n\s*<script src="[^"]+"><\/script>/g, '')
-  .trim();
+/* 3 — artwork referenced from art/, embedded so the page needs no network. */
+const MIME = { png:'image/png', jpg:'image/jpeg', jpeg:'image/jpeg', webp:'image/webp', gif:'image/gif' };
+let images = 0, missing = 0;
 
-const fragment = [
-  '<title>' + title + '</title>',
-  '<style>\n' + css + '\n</style>',
-  body,
-  '<script>\n' + read('posts.js') + '\n</script>',
-  '<script>\n' + read('app.js') + '\n</script>'
-].join('\n\n');
+function inlineArt(html) {
+  return html.replace(/src="(art\/[^"]+)"/g, (whole, rel) => {
+    const file = path.join(__dirname, rel);
+    if (!fs.existsSync(file)) {
+      missing++;
+      console.warn('  ! missing ' + rel + ' — left as a relative URL');
+      return whole;
+    }
+    const ext = path.extname(file).slice(1).toLowerCase();
+    const mime = MIME[ext];
+    if (!mime) { console.warn('  ! unknown image type for ' + rel); return whole; }
+    images++;
+    return 'src="data:' + mime + ';base64,' +
+           fs.readFileSync(file).toString('base64') + '"';
+  });
+}
 
-/* Everything from the source <head> except the stylesheet link. */
-const head = /<head>([\s\S]*?)<\/head>/.exec(src)[1]
-  .replace(/\n\s*<title>[\s\S]*?<\/title>/, '')
-  .replace(/\n\s*<link rel="stylesheet"[^>]*>/, '')
-  .trim();
+const PAGES = fs.readdirSync(__dirname).filter((f) => f.endsWith('.html'));
 
-const page = '<!DOCTYPE html>\n<html lang="en">\n<head>\n' + head +
-  '\n<title>' + title + '</title>\n<style>\n' + css + '\n</style>\n</head>\n<body>\n' +
-  body + '\n\n<script>\n' + read('posts.js') + '\n</script>\n<script>\n' + read('app.js') +
-  '\n</script>\n</body>\n</html>\n';
+function buildPage(file) {
+  const src = read(file);
+  const title = /<title>([\s\S]*?)<\/title>/.exec(src)[1];
+  const body = /<body>([\s\S]*?)<\/body>/.exec(src)[1]
+    .replace(/\n\s*<script src="[^"]+"><\/script>/g, '')
+    .trim();
+  const bodyArt = inlineArt(body);
+
+  /* the page's own scripts, in source order */
+  const scripts = (src.match(/<script src="([^"]+)"><\/script>/g) || [])
+    .map((t) => /src="([^"]+)"/.exec(t)[1])
+    .map((f) => '<script>\n' + read(f) + '\n</script>')
+    .join('\n');
+
+  /* everything from the source <head> except the stylesheet link */
+  const headHtml = /<head>([\s\S]*?)<\/head>/.exec(src)[1]
+    .replace(/\n\s*<title>[\s\S]*?<\/title>/, '')
+    .replace(/\n\s*<link rel="stylesheet"[^>]*>/, '')
+    .trim();
+
+  const page = '<!DOCTYPE html>\n<html lang="en">\n<head>\n' + headHtml +
+    '\n<title>' + title + '</title>\n<style>\n' + css + '\n</style>\n</head>\n<body>\n' +
+    bodyArt + '\n\n' + scripts + '\n</body>\n</html>\n';
+
+  const fragment = [
+    '<title>' + title + '</title>',
+    '<style>\n' + css + '\n</style>',
+    bodyArt,
+    scripts
+  ].join('\n\n');
+
+  return { page, fragment };
+}
 
 fs.mkdirSync(path.join(__dirname, 'dist'), { recursive: true });
-fs.writeFileSync(path.join(__dirname, 'dist/index.html'), page);
-fs.writeFileSync(path.join(__dirname, 'dist/fragment.html'), fragment);
 
-const faces = (read('styles.css').match(/@font-face/g) || []).length;
 const kb = (s) => (Buffer.byteLength(s) / 1024).toFixed(0) + ' KB';
+const faces = (read('styles.css').match(/@font-face/g) || []).length;
+const sizes = [];
+
+for (const file of PAGES) {
+  const { page, fragment } = buildPage(file);
+  fs.writeFileSync(path.join(__dirname, 'dist', file), page);
+  sizes.push(['dist/' + file, kb(page)]);
+  if (file === 'index.html') {
+    fs.writeFileSync(path.join(__dirname, 'dist/fragment.html'), fragment);
+    sizes.push(['dist/fragment.html', kb(fragment)]);
+  }
+}
+
 console.log('fonts embedded:      ' + embedded + '/' + faces);
-console.log('dist/index.html:     ' + kb(page));
-console.log('dist/fragment.html:  ' + kb(fragment));
+console.log('images embedded:     ' + images + (missing ? '  (' + missing + ' MISSING)' : ''));
+for (const [name, size] of sizes) console.log(name.padEnd(21) + size);

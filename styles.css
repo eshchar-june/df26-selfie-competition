@@ -94,11 +94,22 @@ body{
   line-height:1.42;color:var(--navy);max-width:78%;
 }
 
+/* The source photograph is landscape with a wide blank margin on the left.
+   Cropping that margin away gives the taller, squarer framing the design
+   wants — and lets the art hang low enough to notch the prize card below. */
 .hero__art{
-  position:absolute;top:4px;right:calc(-1 * var(--gutter) - 4px);
-  width:60%;margin:0;z-index:2;
+  position:absolute;top:6px;right:calc(-1 * var(--gutter) - 6px);
+  width:64%;aspect-ratio:1/1.34;margin:0;z-index:2;
+  overflow:hidden;   /* clips the crop, and contains alt text if the file is absent */
 }
-.waterpark{display:block;width:100%;height:auto}
+/* The photograph is a soft-edged cut-out on white. Multiply drops that white
+   into the cream page, so there is no halo and the headline stays legible
+   where it crosses the sky. */
+.waterpark{
+  display:block;width:100%;height:100%;
+  object-fit:cover;object-position:74% 50%;
+  mix-blend-mode:multiply;
+}
 
 /* Marker annotation */
 .scribble{
@@ -129,12 +140,19 @@ body{
   margin:0;font-weight:700;font-size:16.5px;
   line-height:1.36;letter-spacing:-.015em;color:var(--navy);
 }
+/* The prize copy is set verbatim, and "Round-trip coach airfare" is too long to
+   sit three-up on a phone — so the items stack into rows and go three-up only
+   once there is room. */
 .prize__list{
-  display:flex;justify-content:space-between;gap:9px;
-  list-style:none;margin:17px 0 0;padding:0;
+  display:grid;gap:9px;
+  list-style:none;margin:16px 0 0;padding:0;
 }
-.prize__list li{display:flex;align-items:center;gap:7px}
-.prize__list span{font-size:11px;font-weight:600;line-height:1.28;color:var(--navy)}
+.prize__list li{display:flex;align-items:center;gap:9px}
+.prize__list span{font-size:12.5px;font-weight:600;line-height:1.25;color:var(--navy)}
+@media (min-width:430px){
+  .prize__list{grid-template-columns:repeat(3,1fr);gap:10px}
+  .prize__list span{font-size:11px}
+}
 .ico{flex:0 0 auto;width:22px;height:22px;color:var(--coral)}
 
 /* ── Raffle ── */
@@ -191,8 +209,10 @@ body{
 
 .li-card{
   background:var(--white);border:1px solid var(--card-line);
-  border-radius:16px;padding:14px;margin:0 32px;
+  border-radius:16px;margin:0 32px;overflow:hidden;
 }
+.li-card__top,.li-post{padding-left:14px;padding-right:14px}
+.li-card__top{padding-top:14px}
 .li-card__top{display:flex;align-items:center;justify-content:space-between}
 .li-mark{flex:0 0 auto;width:27px;height:27px;display:block}
 .li-mark svg{display:block;width:100%;height:100%}
@@ -200,27 +220,22 @@ body{
 .li-dots{width:19px;display:block;color:#5d6470}
 .li-dots svg{display:block;width:100%;height:auto}
 
-.li-skel{display:flex;flex-direction:column;gap:6px;margin-top:12px}
-.li-skel i{display:block;height:7px;border-radius:99px;background:var(--skel)}
-.li-skel i:nth-child(1){width:94%}
-.li-skel i:nth-child(2){width:80%}
-.li-skel i:nth-child(3){width:44%}
+/* LinkedIn-style post body: truncated caption, then tags in link blue */
+.li-post{margin-top:11px}
+.li-post__text{
+  margin:0;font-size:11.5px;font-weight:500;line-height:1.45;color:#1b1f23;
+}
+.li-post__text .more{color:#5d6470;font-weight:500}
+.li-post__tags{
+  margin:3px 0 0;font-size:11.5px;font-weight:600;line-height:1.45;
+  color:#0a66c2;word-spacing:.12em;
+}
 
 .selfie{
-  position:relative;margin-top:12px;border-radius:10px;overflow:hidden;
-  aspect-ratio:4/3;background:#f7ece4;
+  position:relative;margin-top:10px;overflow:hidden;
+  aspect-ratio:4/3;background:#f4efe9;
 }
-.selfie__bg{position:absolute;inset:0;width:100%;height:100%}
-.selfie__figure{
-  position:absolute;left:50%;bottom:0;transform:translateX(-50%);
-  height:88%;width:auto;
-}
-.selfie__badge{
-  position:absolute;right:8px;bottom:8px;
-  background:rgba(20,42,94,.78);color:#fff;
-  font-size:8.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  padding:4px 8px;border-radius:99px;
-}
+.selfie img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 34%}
 
 .count{
   margin:13px 0 0;text-align:center;

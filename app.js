@@ -15,6 +15,7 @@
   var draft = $('draft'), num = $('num'), pos = $('pos'), total = $('total');
   var pips = $('pips'), hint = $('hint'), resetBtn = $('reset'), status = $('status');
   var prevBtn = $('prev'), nextBtn = $('next'), copyBtn = $('copy'), shareBtn = $('share');
+  var preview = $('preview'), tags = $('tags');
 
   /* ── State ── */
   var i = 0;              // current template
@@ -36,6 +37,41 @@
     draft.style.height = draft.scrollHeight + 'px';
   }
 
+  /* Hashtags live on their own trailing line; LinkedIn renders them blue. */
+  function split(text) {
+    var lines = text.replace(/\s+$/, '').split('\n');
+    var tail = [];
+    while (lines.length && (lines[lines.length - 1].trim() === '' ||
+                            /^#\S/.test(lines[lines.length - 1].trim()))) {
+      var line = lines.pop().trim();
+      if (line) tail.unshift(line);
+    }
+    return { body: lines.join('\n').trim(), tags: tail.join(' ') };
+  }
+
+  /* Trim to a word boundary, the way the feed clips a long post. */
+  function clip(text, max) {
+    var flat = text.replace(/\s*\n+\s*/g, ' ').trim();
+    if (flat.length <= max) return { text: flat, cut: false };
+    var cut = flat.slice(0, max);
+    var space = cut.lastIndexOf(' ');
+    if (space > max * 0.6) cut = cut.slice(0, space);
+    return { text: cut.replace(/[,.;:\u2014-]+$/, ''), cut: true };
+  }
+
+  function drawPreview(text) {
+    var parts = split(text);
+    var shown = clip(parts.body, 108);
+    preview.textContent = shown.text + (shown.cut ? '\u2026 ' : '');
+    if (shown.cut) {
+      var more = document.createElement('span');
+      more.className = 'more';
+      more.textContent = 'see more';
+      preview.appendChild(more);
+    }
+    tags.textContent = parts.tags;
+  }
+
   function drawPips() {
     var n = Math.min(PIPS, POSTS.length);
     var half = Math.floor(n / 2);
@@ -50,6 +86,7 @@
   /* ── Render ── */
   function render() {
     draft.value = POSTS[i].text;
+    drawPreview(draft.value);
     num.textContent = pad(i + 1);
     pos.textContent = i + 1;
     edited = false;
@@ -106,6 +143,7 @@
 
   draft.addEventListener('input', function () {
     grow();
+    drawPreview(draft.value);
     armed = false;
     if (!edited) {
       edited = true;
@@ -116,6 +154,7 @@
 
   resetBtn.addEventListener('click', function () {
     draft.value = POSTS[i].text;
+    drawPreview(draft.value);
     edited = false;
     armed = false;
     resetBtn.hidden = true;
