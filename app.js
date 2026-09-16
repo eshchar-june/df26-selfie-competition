@@ -179,57 +179,73 @@
     var frag = document.createDocumentFragment();
 
     POSTS.forEach(function (post, k) {
+      var parts = split(post.text);
+
       var el = document.createElement('article');
       el.className = 'caption';
       el.innerHTML =
-        '<p class="caption__n">' + pad(k + 1) + '</p>' +
-        '<label class="sr-only" for="draft-' + k + '">Caption ' + (k + 1) + '</label>' +
+        '<p class="caption__n">Message ' + pad(k + 1) + '</p>' +
+        '<label class="sr-only" for="draft-' + k + '">Message ' + (k + 1) + '</label>' +
         '<textarea id="draft-' + k + '" class="caption__text" rows="4" spellcheck="true" ' +
         'autocapitalize="sentences"></textarea>' +
+        '<label class="sr-only" for="tags-' + k + '">Hashtags for message ' + (k + 1) + '</label>' +
+        '<textarea id="tags-' + k + '" class="caption__tags" rows="1" spellcheck="false" ' +
+        'autocapitalize="none"></textarea>' +
         '<p class="caption__meta">' +
         '<button class="linkish" type="button" hidden>Undo edits</button></p>' +
         '<button class="btn btn--ghost" type="button">' + COPY_ICON + 'Copy text</button>';
 
-      var ta = el.querySelector('textarea');
+      var ta = el.querySelector('.caption__text');
+      var tags = el.querySelector('.caption__tags');
       var undo = el.querySelector('.linkish');
       var copy = el.querySelector('.btn--ghost');
 
-      ta.value = post.text;
+      ta.value = parts.body;
+      tags.value = parts.tags;
 
-      ta.addEventListener('input', function () {
-        grow(ta);
-        fitHeight();
+      /* The hashtags are a field of their own so they can carry LinkedIn's
+         blue — a textarea cannot style part of its own contents. */
+      function full() {
+        var t = tags.value.trim();
+        return ta.value.replace(/\s+$/, '') + (t ? '\n\n' + t : '');
+      }
+
+      function touched() {
+        grow(ta); grow(tags); fitHeight();
         if (undo.hidden) undo.hidden = false;
-      });
+      }
+
+      ta.addEventListener('input', touched);
+      tags.addEventListener('input', touched);
 
       undo.addEventListener('click', function () {
-        ta.value = post.text;
+        ta.value = parts.body;
+        tags.value = parts.tags;
         undo.hidden = true;
-        grow(ta);
-        fitHeight();
+        grow(ta); grow(tags); fitHeight();
         say('Edits undone');
       });
 
       copy.addEventListener('click', function () {
-        copyText(ta.value).then(function () { say('Caption copied'); });
+        copyText(full()).then(function () { say('Caption copied'); });
       });
 
       /* Bring a half-visible card fully into view when it's tapped. */
       el.addEventListener('focusin', function () { if (k !== i) scrollTo(k); });
 
       frag.appendChild(el);
-      cards.push({ el: el, ta: ta });
+      cards.push({ el: el, ta: ta, tags: tags, full: full });
     });
 
     deck.appendChild(frag);
-    cards.forEach(function (c) { grow(c.ta); });
+    cards.forEach(function (c) { grow(c.ta); grow(c.tags); });
   }
 
   /* "Open LinkedIn" — the device's own share sheet where there is one
      (picking LinkedIn prefills the composer), otherwise copy the caption
      and open the web composer, so the text is always in hand. */
   shareBtn.addEventListener('click', function () {
-    var text = cards[i] ? cards[i].ta.value : '';
+    var text = cards[i] ? cards[i].full() : '';
 
     if (navigator.share) {
       navigator.share({ text: text })['catch'](function (err) {
@@ -242,8 +258,20 @@
     copyThenOpen(text);
   });
 
+  /* Text areas are sized from scrollHeight, which is measured against whatever
+     font is active at the time. The brand face arrives later and reflows the
+     text taller, so measure again once it has loaded or the card clips. */
+  function regrow() {
+    cards.forEach(function (c) { grow(c.ta); grow(c.tags); });
+    fitHeight();
+    drawFades();
+  }
+
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(regrow);
+  window.addEventListener('load', regrow);
+
   window.addEventListener('resize', function () {
-    cards.forEach(function (c) { grow(c.ta); });
+    cards.forEach(function (c) { grow(c.ta); grow(c.tags); });
     fitHeight();
     drawFades();
   });

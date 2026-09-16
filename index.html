@@ -25,22 +25,14 @@
   <!-- ══════════ Hero ══════════ -->
   <section class="hero">
 
-    <div class="hero__copy">
-      <h1 class="hero__title">
-        Take a selfie.<br>Win a 2-night trip to Noah&rsquo;s Ark Waterpark.
-      </h1>
+    <h1 class="hero__title">
+      Take a selfie.<br>Win a 2-night trip to Noah&rsquo;s Ark Waterpark.
+    </h1>
+
+    <div class="hero__row">
       <p class="hero__sub">Post about June on LinkedIn for a chance to win.</p>
-    </div>
 
-    <figure class="hero__art">
-      <figcaption class="scribble">
-        Bigger<br>splashes<br>together.
-        <svg class="scribble__arrow" viewBox="0 0 34 44" fill="none" aria-hidden="true">
-          <path d="M28 3C25 16 17 30 6 38" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-          <path d="M4 25c-1 7 0 12 2 14 3 0 8-3 11-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-        </svg>
-      </figcaption>
-
+      <figure class="hero__art">
       <!-- Drawn stand-in. The photograph sits on top of it and hides itself if
            art/waterpark.png is absent, so the page is never short an image. -->
 <svg class="art-fallback" viewBox="0 0 340 400" role="img" aria-label="Noah's Ark Waterpark">
@@ -122,8 +114,9 @@
       </svg>
       <img class="waterpark" src="art/hero-image.jpg" onerror="this.hidden=true"
            onload="this.previousElementSibling.setAttribute('hidden','')"
-           alt="Noah&rsquo;s Ark Waterpark — waterslides, palm trees and the park sign">
-    </figure>
+             alt="Noah&rsquo;s Ark Waterpark — waterslides, palm trees and the park sign">
+      </figure>
+    </div>
   </section>
 
   <!-- ══════════ Grand prize ══════════ -->

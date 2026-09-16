@@ -8,10 +8,6 @@
 @font-face{font-family:"Sharp Sans";font-weight:700;font-style:normal;font-display:swap;
   src:url("https://cdn.prod.website-files.com/697a05c3e5cc94cfc4a88e7e/6a661f8e4033ff2665ed4b3c_SharpSansBold.woff") format("woff")}
 
-/* — Handwriting for the marker annotation (Caveat, SIL OFL, subset locally) — */
-@font-face{font-family:Caveat;font-weight:600;font-style:normal;font-display:swap;
-  src:url("fonts/Caveat-SemiBold.woff2") format("woff2")}
-
 :root{
   color-scheme:light;
 
@@ -28,7 +24,6 @@
   --skel:#dfe3ea;
 
   --font-body:"Sharp Sans",-apple-system,"Helvetica Neue",Arial,sans-serif;
-  --font-hand:Caveat,"Bradley Hand","Segoe Script",cursive;
 
   --gutter:22px;
   --safe-b:env(safe-area-inset-bottom,0px);
@@ -76,16 +71,21 @@ body{
 /* ── Hero ── */
 .hero{position:relative;padding-top:18px}
 
-.hero__copy{position:relative;z-index:3}
-
+/* The headline runs the full column so it can be set large enough to read at
+   arm's length on a phone. The photograph then sits beside the standfirst,
+   which is short enough to share the line. */
 .hero__title{
-  margin:0;font-weight:700;font-size:clamp(16px,4.35vw,21px);
-  line-height:1.16;letter-spacing:-.025em;color:var(--navy);
-  max-width:56%;
+  margin:0;font-weight:700;font-size:clamp(24px,7.2vw,31px);
+  line-height:1.08;letter-spacing:-.032em;color:var(--navy);
+}
+.hero__row{
+  display:flex;align-items:flex-start;gap:14px;
+  margin-top:15px;
 }
 .hero__sub{
-  margin:13px 0 0;font-size:13px;font-weight:500;
-  line-height:1.42;color:var(--navy);max-width:56%;
+  margin:0;flex:1 1 auto;
+  font-size:clamp(14px,4.1vw,16px);font-weight:500;
+  line-height:1.38;color:var(--navy);
 }
 
 /* The photograph sits clear of the copy column — no text runs over it, and
@@ -93,8 +93,8 @@ body{
    page colour, and multiplying two identical off-whites would darken the
    ground into a visible block. */
 .hero__art{
-  position:absolute;top:6px;right:0;
-  width:40%;margin:0;z-index:2;
+  position:relative;flex:0 0 52%;
+  width:52%;margin:0;
 }
 /* Never cropped. The painterly edges fade into the page colour, and any crop
    cuts a hard line through the sky wash or the foliage. */
@@ -110,18 +110,6 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
   width:82%;height:auto;
 }
 .hero__art .waterpark{position:relative}
-
-/* Marker annotation */
-.scribble{
-  position:absolute;top:8px;left:26%;z-index:3;
-  margin:0;font-family:var(--font-hand);font-weight:600;
-  font-size:16px;line-height:1.1;color:var(--navy);
-  transform:rotate(-5deg);
-}
-.scribble__arrow{
-  position:absolute;top:100%;left:8px;margin-top:1px;
-  width:23px;height:auto;color:var(--navy);
-}
 
 /* ── Grand prize ── */
 .prize{
@@ -221,7 +209,7 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 }
 .li-post__text .more{color:#5d6470;font-weight:500}
 .li-post__tags{
-  margin:3px 0 0;font-size:11.5px;font-weight:600;line-height:1.45;
+  margin:4px 0 0;font-size:11.5px;font-weight:700;line-height:1.45;
   color:#0a66c2;word-spacing:.12em;
 }
 
@@ -298,8 +286,8 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 }
 .caption:not(.is-on){opacity:.55}
 .caption__n{
-  margin:0 0 6px;font-size:11px;font-weight:700;
-  letter-spacing:.05em;color:var(--coral);
+  margin:0 0 8px;font-size:10.5px;font-weight:700;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--coral);
 }
 .caption__text{
   display:block;width:100%;border:0;background:transparent;resize:none;
@@ -307,6 +295,15 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
   color:var(--navy);padding:0;margin:0;overflow:hidden;
 }
 .caption__text:focus{outline:none}
+
+/* Hashtags get their own field so they can carry LinkedIn blue — a textarea
+   cannot style part of its own contents. */
+.caption__tags{
+  display:block;width:100%;border:0;background:transparent;resize:none;
+  font-family:inherit;font-size:13px;font-weight:700;line-height:1.5;
+  color:#0a66c2;padding:0;margin:9px 0 0;overflow:hidden;
+}
+.caption__tags:focus{outline:none}
 .caption__text::placeholder{color:#a9b0c2}
 
 .caption__meta{
@@ -347,7 +344,6 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 }
 
 @media (max-width:360px){
-  .hero__title{max-width:70%}
   .prize__list{flex-wrap:wrap}
   .prize__list li{flex:0 0 46%}
 }
