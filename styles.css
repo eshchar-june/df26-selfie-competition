@@ -32,6 +32,15 @@
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 
+/* Nothing on this page moves sideways except the message carousel. The fan of
+   sample cards and the carousel's own bleed reach into the gutter, and left
+   to itself that turns the whole page into a horizontal scroller: a sideways
+   trackpad swipe drags the page, or falls through to the browser's own
+   back-swipe. clip (rather than hidden) leaves no scroll container behind at
+   all, and the overscroll rules stop a swipe that runs past the end of the
+   carousel from being handed up to the page or the browser. */
+html,body{overscroll-behavior-x:none}
+
 body{
   margin:0;
   background:var(--cream);
@@ -41,7 +50,8 @@ body{
   font-size:16px;
   line-height:1.45;
   -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
+  overflow-x:hidden;      /* Safari 15 and older */
+  overflow-x:clip;
 }
 
 .shell{
@@ -364,6 +374,7 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 .deck{
   display:flex;gap:11px;align-items:flex-start;
   overflow-x:auto;overflow-y:hidden;
+  overscroll-behavior-x:contain;
   scroll-snap-type:x mandatory;
   scroll-padding-left:var(--gutter);
   margin:0 calc(-1 * var(--gutter));
