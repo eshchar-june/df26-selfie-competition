@@ -189,8 +189,14 @@ body{
 .step__t{margin:0;font-size:11.5px;font-weight:600;line-height:1.32;color:var(--navy)}
 .step__s{margin:3px 0 0;font-size:9.5px;font-weight:500;line-height:1.28;color:var(--navy)}
 
+.join__cta{
+  margin:20px 0 0;font-size:14px;font-weight:500;
+  line-height:1.45;color:var(--navy);
+}
+.join__cta strong{font-weight:700}
+
 /* ── Carousel ── */
-.templates{margin-top:26px}
+.templates{margin-top:18px}
 .carousel{position:relative}
 
 .nav{
