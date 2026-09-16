@@ -85,7 +85,7 @@ body{
    needed — the masked edge, the held-back measures — applies any more. */
 .hero{
   position:relative;
-  padding-top:28px;
+  padding-top:44px;
 }
 .hero__copy{position:relative;z-index:3}
 /* Centred, and sized so the hand-placed break after "Take a selfie." is
@@ -151,7 +151,7 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
    card's widest the copy fills two lines, and the size drops with the viewport
    so it stays at two lines down to about 360px. */
 .prize__title{
-  margin:0;font-weight:700;font-size:clamp(18px,5.1vw,23px);
+  margin:0;font-weight:700;font-size:clamp(22px,6.2vw,28px);
   line-height:1.26;letter-spacing:-.02em;color:var(--navy);
 }
 /* Three across, with the icon above its label: the copy is set verbatim and
@@ -189,7 +189,7 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 .join{margin-top:30px}
 .join__title{
   margin:0 0 14px;text-align:center;
-  font-weight:700;font-size:clamp(20px,5.6vw,25px);
+  font-weight:700;font-size:clamp(22px,6.2vw,28px);
   line-height:1.13;letter-spacing:-.025em;color:var(--navy);
 }
 .join__sub{
@@ -327,7 +327,7 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 
 .deck__title{
   margin:46px 0 0;text-align:center;
-  font-weight:700;font-size:clamp(20px,5.6vw,25px);
+  font-weight:700;font-size:clamp(22px,6.2vw,28px);
   line-height:1.15;letter-spacing:-.025em;color:var(--navy);
 }
 .deck__sub{
