@@ -79,57 +79,43 @@ body{
 }
 
 /* ── Hero ──
-   Copy and photograph share one grid cell, so the picture sits behind the
-   words instead of beside them and the headline can run the full column.
-   Text never has to survive the picture at full strength: the photograph's
-   left edge is masked away to nothing, so everything the copy crosses is
-   page colour carrying a trace of sky. Measured against the navy, the
-   worst pixel under any glyph stays above the 4.5:1 that WCAG AA asks for
-   body text. */
+   Stacked, not overlaid: the headline gets the whole column, the standfirst
+   sits centred under it, and the photograph follows underneath at full bleed.
+   Nothing crosses the picture, so none of the contrast work the overlay
+   needed — the masked edge, the held-back measures — applies any more. */
 .hero{
   position:relative;
-  display:grid;grid-template-columns:1fr;
-  padding-top:18px;
+  padding-top:28px;
 }
-/* Headline and standfirst share one cell with the picture, rather than taking
-   a grid row each. A picture spanning two rows pushes the extra it needs into
-   both of them, which opened a gap under the headline that no margin asked
-   for; in a single cell the only space between them is the margin below. */
-.hero__copy{grid-area:1/1;z-index:3}
+.hero__copy{position:relative;z-index:3}
+/* Centred, and sized so the hand-placed break after "Take a selfie." is
+   followed by two lines of near-equal length rather than by a last line
+   carrying one word. */
 .hero__title{
-  margin:0;font-weight:700;font-size:clamp(21px,6.2vw,28px);
-  line-height:1.1;letter-spacing:-.032em;color:var(--navy);
-  /* Held clear of the picture: it breaks to more lines rather than running
-     over the palms and the sign. */
-  max-width:53%;
+  margin:0;font-weight:700;font-size:clamp(26px,8vw,38px);
+  line-height:1.08;letter-spacing:-.034em;color:var(--navy);
+  text-align:center;
 }
-/* Held to a measure that keeps it inside the dissolved edge — past that the
-   foliage is dark enough to pull the contrast under AA. */
+/* Centred under the headline, and held to a measure that keeps it to two
+   lines — a single line running the full column reads as a third headline
+   line rather than as a caption. */
 .hero__sub{
-  margin:14px 0 0;max-width:47%;
+  margin:12px auto 0;max-width:19em;text-align:center;
   font-size:clamp(14px,4.1vw,16px);font-weight:500;
   line-height:1.38;color:var(--navy);
 }
 
-/* The top margin drops the picture clear of the headline's first lines, so the
-   words cross only the top strip of sky. It needs no blend mode: the cut-out
-   already sits on the page colour, and multiplying two identical off-whites
-   would darken the ground into a visible block. */
+/* Full bleed. The cut-out's painterly edges dissolve into white, so it wants
+   the page edges rather than the text column — cropping it to the gutter puts
+   a hard line through the sky wash. It needs no blend mode: the cut-out is
+   already on the page colour, and multiplying two identical off-whites would
+   darken the ground into a visible block. */
 .hero__art{
-  /* Spans the headline and sub rows so it can be large and hang low, the way
-     the reference does. The left edge is masked to nothing, so the copy that
-     crosses it sits on clean page colour rather than on the picture. */
-  grid-area:1/1;z-index:1;
-  justify-self:end;align-self:start;
-  width:86%;margin:26px calc(-1 * var(--gutter)) 0 0;
-  -webkit-mask-image:linear-gradient(to right,transparent 0,rgba(0,0,0,.4) 20%,#000 42%);
-          mask-image:linear-gradient(to right,transparent 0,rgba(0,0,0,.4) 20%,#000 42%);
-}
-/* Without a mask the copy would meet the picture at full strength. Pull it
-   clear instead: smaller, hard right, below the headline. */
-@supports not ((-webkit-mask-image:linear-gradient(#000,#000)) or (mask-image:linear-gradient(#000,#000))){
-  .hero__art{width:50%;margin-top:20px}
-  .hero__sub{max-width:44%}
+  position:relative;z-index:1;
+  /* Pulled up: the picture carries its own white space at the top, so a
+     flush margin reads as a gap. The copy sits above it on z-index 3. */
+  margin:-14px calc(-1 * var(--gutter)) 0;
+  width:calc(100% + 2 * var(--gutter));
 }
 /* Never cropped. The painterly edges fade into the page colour, and any crop
    cuts a hard line through the sky wash or the foliage. */
@@ -138,13 +124,12 @@ body{
    over the user agent[hidden] rule and render the alt text. */
 img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the per-image display rules below */
 
-/* Drawn stand-in, sitting behind the photograph. Visible only while
-   art/waterpark.png is absent — the photo covers it once it is there. */
-.hero__art .art-fallback{
-  position:absolute;top:0;left:6%;right:0;
-  width:88%;height:auto;
-}
-.hero__art .waterpark{position:relative}
+/* Drawn stand-in, shown only while art/hero-image.jpg is absent: the
+   photograph's onload hides it, and its onerror hides the photograph instead,
+   so exactly one of the two is ever in the flow. It carries the figure's
+   height in the meantime — stacked behind the photograph it carried none, and
+   a missing file left the figure at zero and the drawing over the prize card. */
+.hero__art .art-fallback{display:block;width:100%;height:auto}
 
 /* ── Grand prize ── */
 /* Pulled up over the foot of the picture: the card's top edge covers the last
@@ -232,47 +217,46 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 
 /* ── Post samples ── */
 .templates{margin-top:26px}
-/* A dealt deck, not a list: the three samples are collected into one compact
-   patch, fanned wide rather than tall — each card is dropped a tab's height
-   below the one behind and pushed well off-centre, so the group is short
-   enough to take in at a glance and every card still shows its mark, its
-   near edge and a column of its photograph. The square crop matches what a
-   LinkedIn photo post looks like.
+/* A dealt hand, not a list: the three samples sit shoulder to shoulder in one
+   short row, each overlapping its neighbour and tilted a few degrees the other
+   way, so the group reads as a fanned hand of cards — small enough to take in
+   at a glance, and every card still shows its mark, its caption and most of
+   its photograph. The square crop matches what a LinkedIn photo post looks
+   like.
 
-   The two behind are positioned rather than stacked with negative margins:
-   captions run to one line or two depending on the post, so only fixed tops
-   keep the exposed tabs the same height on every load. The front card stays
-   in flow, so the section is exactly as tall as the deck. */
-.samples{position:relative;padding:8px 0 6px}
-/* 60% with the outer cards pushed 12% either side of centre: the deck reads as
-   a small illustration of the thing rather than a thing to read, and the fan
-   clears the screen edge on a 320px screen once the tilt is counted in. The
-   spread and the drops below are held in proportion to the card, so the three
-   overlap by the same fraction they did at full size. */
+   Laid out with flex and negative margins rather than absolute offsets: the
+   row is exactly as tall as its tallest card, so captions running to one line
+   or two no longer change where the section ends. */
+.samples{
+  position:relative;padding:8px 0 6px;
+  display:flex;justify-content:center;align-items:flex-start;
+}
+/* 36% a card with a 5% bite taken out of each seam: the three together come to
+   just under the full measure, leaving the tilt room to lean into the gutter
+   without reaching the screen edge on a 320px screen. */
 .samples .li-card{
-  position:absolute;top:0;
-  width:60%;padding:8px;border-radius:13px;
-  box-shadow:0 8px 20px rgba(20,42,94,.14);
+  position:relative;
+  flex:0 0 36%;width:36%;
+  padding:5px;border-radius:9px;
+  box-shadow:0 6px 16px rgba(20,42,94,.14);
   transform-origin:50% 50%;
 }
 /* Each card's resting angle is held in a custom property, so the deal below
-   can animate towards it without restating every angle. */
-.samples .li-card:nth-child(1){left:8%;top:0;z-index:1;--rot:-6deg}
-.samples .li-card:nth-child(2){left:32%;top:33px;z-index:2;--rot:4.5deg}
-/* The front card is centred and in flow — it sets the container's height. */
-.samples .li-card:nth-child(3){
-  position:relative;left:0;margin:66px auto 0;
-  z-index:3;--rot:-1.5deg;
-}
+   can animate towards it without restating every angle. The middle card rides
+   a little low and sits on top, which is what makes the row read as a fan
+   rather than three tiles in a strip. */
+.samples .li-card:nth-child(1){z-index:1;--rot:-6deg;margin-right:-5%}
+.samples .li-card:nth-child(2){z-index:3;--rot:2.5deg;margin-top:12px;margin-right:-5%}
+.samples .li-card:nth-child(3){z-index:2;--rot:5.5deg}
 .samples .li-card{transform:rotate(var(--rot,0deg))}
 
-/* Dealt on the way down the page: the cards arrive back to front, about a
-   seventh of a second apart, so the first is briefly alone before the middle
-   lands over it and the last lands over both. The script is what sets
-   data-deal, so with no script the deck is simply there. */
+/* Dealt on the way down the page: the cards arrive left to right, about a
+   seventh of a second apart, so the row builds up rather than appearing whole.
+   The script is what sets data-deal, so with no script the deck is simply
+   there. */
 .samples[data-deal] .li-card{
   opacity:0;
-  transform:translateY(26px) rotate(calc(var(--rot) * .25)) scale(.97);
+  transform:translateY(16px) rotate(calc(var(--rot) * .25)) scale(.97);
   transition:opacity .42s ease,transform .58s cubic-bezier(.2,.7,.3,1);
 }
 .samples[data-deal] .li-card:nth-child(2){transition-delay:.13s}
@@ -286,18 +270,18 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
    drops with the frame, so the shrunken card keeps a full-size card's
    proportions instead of turning into a narrow column of text. */
 .samples .li-card__top{align-items:center}
-.samples .li-mark{width:17px;height:17px}
-.samples .li-dots{width:13px}
-.samples .li-post{margin-top:6px}
-.samples .li-post__text{font-size:10px;line-height:1.42}
-.samples .li-post__tags{font-size:10px;margin-top:3px}
+.samples .li-mark{width:11px;height:11px}
+.samples .li-dots{width:9px}
+.samples .li-post{margin-top:4px}
+.samples .li-post__text{font-size:6.5px;line-height:1.42}
+.samples .li-post__tags{font-size:6.5px;margin-top:2px}
 .samples .selfie{
-  margin-top:6px;border-radius:6px;
+  margin-top:4px;border-radius:4px;
   aspect-ratio:1/1;
 }
 .samples .selfie img{object-position:50% 28%}
-.samples .li-react{margin-top:6px}
-.samples .li-react svg{width:30px}
+.samples .li-react{margin-top:4px}
+.samples .li-react svg{width:19px}
 
 /* White frame around the whole post, with the image inset inside it. */
 .li-card{
@@ -375,7 +359,10 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 .deck-wrap{position:relative;margin-top:15px}
 
 .deck{
-  display:flex;gap:11px;align-items:flex-start;
+  /* Stretched, not flex-start: one flex line makes every card as tall as the
+     tallest, so the deck holds one height and a swipe doesn't resize the page
+     under the button. */
+  display:flex;gap:11px;align-items:stretch;
   /* Positioned so the cards' absolutely-placed screen-reader labels are
      contained — and therefore clipped — by the track. Left static, their
      containing block is .shell, they keep their static position thousands of
@@ -389,7 +376,6 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
   padding:2px var(--gutter) 4px;
   -webkit-overflow-scrolling:touch;
   scrollbar-width:none;
-  transition:height .28s cubic-bezier(.2,.7,.3,1);
 }
 .deck::-webkit-scrollbar{display:none}
 
@@ -411,6 +397,7 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 
 .caption{
   flex:0 0 87%;scroll-snap-align:start;
+  display:flex;flex-direction:column;
   background:var(--white);border:1px solid var(--card-line);
   border-radius:14px;padding:13px 14px 14px;
   transition:opacity .25s ease;
@@ -437,9 +424,11 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 .caption__tags:focus{outline:none}
 .caption__text::placeholder{color:#a9b0c2}
 
+/* The spare height a short caption leaves goes above the footer, so Copy sits
+   on the same line on every card. */
 .caption__meta{
   display:flex;align-items:center;justify-content:space-between;gap:10px;
-  margin:10px 0 0;font-size:10px;color:var(--muted);
+  margin:auto 0 0;padding-top:10px;font-size:10px;color:var(--muted);
 }
 .linkish{
   border:0;background:none;padding:0;cursor:pointer;

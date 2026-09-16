@@ -109,13 +109,6 @@
     pips.innerHTML = html;
   }
 
-  /* The track is as tall as the card in view, so short captions don't leave
-     a gap above the button and long ones aren't cut off. */
-  function fitHeight() {
-    if (!cards[i]) return;
-    deck.style.height = cards[i].el.offsetHeight + 'px';
-  }
-
   function drawFades() {
     var max = deck.scrollWidth - deck.clientWidth;
     wrap.classList.toggle('has-prev', deck.scrollLeft > 4);
@@ -131,7 +124,6 @@
     if (Date.now() > navUntil) navTarget = i;
     drawPips();
     drawNav();
-    fitHeight();
   }
 
   /* Which card is nearest the track's left edge? */
@@ -218,7 +210,7 @@
       }
 
       function touched() {
-        grow(ta); grow(tags); fitHeight();
+        grow(ta); grow(tags);
         if (undo.hidden) undo.hidden = false;
       }
 
@@ -229,7 +221,7 @@
         ta.value = parts.body;
         tags.value = parts.tags;
         undo.hidden = true;
-        grow(ta); grow(tags); fitHeight();
+        grow(ta); grow(tags);
         say('Edits undone');
       });
 
@@ -269,7 +261,6 @@
      text taller, so measure again once it has loaded or the card clips. */
   function regrow() {
     cards.forEach(function (c) { grow(c.ta); grow(c.tags); });
-    fitHeight();
     drawFades();
   }
 
@@ -292,7 +283,6 @@
 
   window.addEventListener('resize', function () {
     cards.forEach(function (c) { grow(c.ta); grow(c.tags); });
-    fitHeight();
     drawFades();
   });
 
@@ -347,7 +337,6 @@
   navTarget = i;
   drawPips();
   drawNav();
-  fitHeight();
   deck.scrollLeft = i * (cards[0].el.offsetWidth + 11);
   drawFades();
 
