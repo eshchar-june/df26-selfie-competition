@@ -47,7 +47,7 @@ body{
   color:var(--navy);
   font-family:var(--font-body);
   font-weight:500;
-  font-size:16px;
+  font-size:15px;
   line-height:1.45;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;      /* Safari 15 and older */
@@ -74,7 +74,7 @@ body{
 }
 .masthead__where{
   margin:1px 0 0;text-align:right;
-  font-size:10.5px;font-weight:700;line-height:1.4;
+  font-size:9px;font-weight:700;line-height:1.4;
   letter-spacing:.12em;text-transform:uppercase;color:var(--navy);
 }
 
@@ -107,7 +107,7 @@ body{
    foliage is dark enough to pull the contrast under AA. */
 .hero__sub{
   margin:14px 0 0;max-width:47%;
-  font-size:clamp(15.5px,4.5vw,17px);font-weight:500;
+  font-size:clamp(14px,4.1vw,16px);font-weight:500;
   line-height:1.38;color:var(--navy);
 }
 
@@ -157,7 +157,7 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
   padding:16px 18px 18px;
 }
 .label{
-  margin:0 0 10px;font-size:11.5px;font-weight:700;
+  margin:0 0 10px;font-size:10px;font-weight:700;
   letter-spacing:.2em;text-transform:uppercase;color:var(--navy);
 }
 .label--coral{color:var(--coral)}
@@ -178,14 +178,14 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 }
 .prize__list li{display:block}
 .prize__list span{
-  display:block;font-size:12.5px;font-weight:600;
+  display:block;font-size:10.5px;font-weight:600;
   line-height:1.3;color:var(--navy);
 }
 .ico{display:block;width:21px;height:21px;color:var(--coral);margin:0 0 7px}
 
 @media (min-width:420px){
   .prize__list{gap:13px}
-  .prize__list span{font-size:13.5px}
+  .prize__list span{font-size:11.5px}
   .ico{width:23px;height:23px}
 }
 
@@ -196,7 +196,7 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
   padding:13px 16px;margin-top:12px;
 }
 .raffle__ico{flex:0 0 auto;width:23px;height:23px;color:var(--coral)}
-  .raffle p{flex:1;min-width:0;margin:0;font-size:13.5px;line-height:1.42;color:var(--navy)}
+.raffle p{flex:1;min-width:0;margin:0;font-size:11.5px;line-height:1.42;color:var(--navy)}
 .raffle strong{font-weight:700}
 .raffle a{color:var(--navy);text-decoration:underline;text-underline-offset:2px}
 
@@ -209,7 +209,7 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 }
 .join__sub{
   margin:0;text-align:center;
-  font-size:16px;font-weight:500;line-height:1.45;color:var(--muted);
+  font-size:14.5px;font-weight:500;line-height:1.45;color:var(--muted);
 }
 /* Typographic, not tiled: a small label over each step, centred, no cards
    and no colour blocks. Kept for playground.html. */
@@ -218,7 +218,7 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 .steps li + li{border-top:1px solid #ece4d3}
 .steps__n{
   display:block;margin-bottom:6px;
-  font-size:11.5px;font-weight:700;letter-spacing:.2em;
+  font-size:10px;font-weight:700;letter-spacing:.2em;
   text-transform:uppercase;color:var(--coral);
 }
 .steps__t{
@@ -226,13 +226,12 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
   line-height:1.15;letter-spacing:-.025em;color:var(--navy);
 }
 .steps__s{
-  margin:5px 0 0;font-size:14px;font-weight:500;
+  margin:5px 0 0;font-size:12.5px;font-weight:500;
   line-height:1.3;color:var(--muted);
 }
 
 /* ── Post samples ── */
 .templates{margin-top:26px}
-.templates__label{margin-bottom:9px;text-align:center}
 /* A dealt deck, not a list: the three samples are collected into one compact
    patch, fanned wide rather than tall — each card is dropped a tab's height
    below the one behind and pushed well off-centre, so the group is short
@@ -245,22 +244,24 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
    keep the exposed tabs the same height on every load. The front card stays
    in flow, so the section is exactly as tall as the deck. */
 .samples{position:relative;padding:8px 0 6px}
-/* 72% with the outer cards pushed 14% either side of centre: the fan uses the
-   full column and, once the tilt is counted in, still stops short of the
-   screen edge on a 320px screen. */
+/* 60% with the outer cards pushed 12% either side of centre: the deck reads as
+   a small illustration of the thing rather than a thing to read, and the fan
+   clears the screen edge on a 320px screen once the tilt is counted in. The
+   spread and the drops below are held in proportion to the card, so the three
+   overlap by the same fraction they did at full size. */
 .samples .li-card{
   position:absolute;top:0;
-  width:72%;padding:10px;
-  box-shadow:0 10px 26px rgba(20,42,94,.15);
+  width:60%;padding:8px;border-radius:13px;
+  box-shadow:0 8px 20px rgba(20,42,94,.14);
   transform-origin:50% 50%;
 }
 /* Each card's resting angle is held in a custom property, so the deal below
    can animate towards it without restating every angle. */
-.samples .li-card:nth-child(1){left:0;top:0;z-index:1;--rot:-6deg}
-.samples .li-card:nth-child(2){left:28%;top:40px;z-index:2;--rot:4.5deg}
+.samples .li-card:nth-child(1){left:8%;top:0;z-index:1;--rot:-6deg}
+.samples .li-card:nth-child(2){left:32%;top:33px;z-index:2;--rot:4.5deg}
 /* The front card is centred and in flow — it sets the container's height. */
 .samples .li-card:nth-child(3){
-  position:relative;left:0;margin:80px auto 0;
+  position:relative;left:0;margin:66px auto 0;
   z-index:3;--rot:-1.5deg;
 }
 .samples .li-card{transform:rotate(var(--rot,0deg))}
@@ -281,20 +282,22 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
   transform:rotate(var(--rot));
 }
 
-/* Compact: a short caption, a square crop, small marks. */
+/* Compact: a short caption, a square crop, small marks. Every measure here
+   drops with the frame, so the shrunken card keeps a full-size card's
+   proportions instead of turning into a narrow column of text. */
 .samples .li-card__top{align-items:center}
-.samples .li-mark{width:21px;height:21px}
-.samples .li-dots{width:15px}
-.samples .li-post{margin-top:8px}
-.samples .li-post__text{font-size:12px;line-height:1.42}
-.samples .li-post__tags{font-size:12px;margin-top:4px}
+.samples .li-mark{width:17px;height:17px}
+.samples .li-dots{width:13px}
+.samples .li-post{margin-top:6px}
+.samples .li-post__text{font-size:10px;line-height:1.42}
+.samples .li-post__tags{font-size:10px;margin-top:3px}
 .samples .selfie{
-  margin-top:8px;border-radius:7px;
+  margin-top:6px;border-radius:6px;
   aspect-ratio:1/1;
 }
 .samples .selfie img{object-position:50% 28%}
-.samples .li-react{margin-top:8px}
-.samples .li-react svg{width:36px}
+.samples .li-react{margin-top:6px}
+.samples .li-react svg{width:30px}
 
 /* White frame around the whole post, with the image inset inside it. */
 .li-card{
@@ -313,11 +316,11 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 /* LinkedIn-style post body: truncated caption, then tags in link blue */
 .li-post{margin-top:11px}
 .li-post__text{
-  margin:0;font-size:13px;font-weight:500;line-height:1.45;color:#1b1f23;
+  margin:0;font-size:11.5px;font-weight:500;line-height:1.45;color:#1b1f23;
 }
 .li-post__text .more{color:#5d6470;font-weight:500}
 .li-post__tags{
-  margin:4px 0 0;font-size:13px;font-weight:700;line-height:1.45;
+  margin:4px 0 0;font-size:11.5px;font-weight:700;line-height:1.45;
   color:#0a66c2;word-spacing:.12em;
 }
 
@@ -345,7 +348,7 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 }
 .deck__sub{
   margin:5px 0 0;text-align:center;
-  font-size:15px;font-weight:500;color:var(--muted);
+  font-size:13px;font-weight:500;color:var(--muted);
 }
 
 /* ── Caption deck ──
@@ -373,6 +376,11 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 
 .deck{
   display:flex;gap:11px;align-items:flex-start;
+  /* Positioned so the cards' absolutely-placed screen-reader labels are
+     contained — and therefore clipped — by the track. Left static, their
+     containing block is .shell, they keep their static position thousands of
+     pixels out along the track, and the whole page becomes that wide. */
+  position:relative;
   overflow-x:auto;overflow-y:hidden;
   overscroll-behavior-x:contain;
   scroll-snap-type:x mandatory;
@@ -409,7 +417,7 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 }
 .caption:not(.is-on){opacity:.55}
 .caption__n{
-  margin:0 0 8px;font-size:12px;font-weight:700;
+  margin:0 0 8px;font-size:10.5px;font-weight:700;
   letter-spacing:.11em;text-transform:uppercase;color:var(--coral);
 }
 .caption__text{
@@ -431,11 +439,11 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 
 .caption__meta{
   display:flex;align-items:center;justify-content:space-between;gap:10px;
-  margin:10px 0 0;font-size:12px;color:var(--muted);
+  margin:10px 0 0;font-size:10px;color:var(--muted);
 }
 .linkish{
   border:0;background:none;padding:0;cursor:pointer;
-  font-family:inherit;font-size:12px;font-weight:700;
+  font-family:inherit;font-size:10px;font-weight:700;
   color:var(--coral);text-decoration:underline;text-underline-offset:2px;
 }
 
@@ -443,7 +451,7 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 .btn{
   display:flex;align-items:center;justify-content:center;gap:10px;
   width:100%;border:0;border-radius:13px;
-  font-family:inherit;font-weight:700;font-size:16.5px;
+  font-family:inherit;font-weight:700;font-size:15px;
   padding:18px 20px;cursor:pointer;text-decoration:none;
   -webkit-tap-highlight-color:transparent;
   transition:transform .12s ease,filter .12s ease;
@@ -453,7 +461,7 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 
 .btn--ghost{
   background:#f4f2eb;color:var(--navy);
-  font-size:15px;font-weight:600;padding:15px 16px;
+  font-size:13.5px;font-weight:600;padding:14px 16px;
   border-radius:11px;margin-top:12px;
 }
 .btn--ghost:active{background:#eae7dd}
@@ -463,7 +471,7 @@ img[hidden],.art-fallback[hidden]{display:none !important}   /* wins over the pe
 
 .status{
   margin:11px 0 0;min-height:1.2em;text-align:center;
-  font-size:13px;font-weight:600;color:var(--muted);
+  font-size:11.5px;font-weight:600;color:var(--muted);
 }
 
 @media (max-width:360px){
