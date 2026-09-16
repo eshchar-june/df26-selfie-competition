@@ -14,15 +14,15 @@ missing.
 
 ## Weight
 
-The page currently references the full-size PNGs, which makes `dist/index.html` **10.6 MB**.
-At that size the browser leaves large areas of the page unpainted while it decodes them —
-verified by swapping in the compressed copies, which brought the page to 680 KB and made
-it render correctly.
+The page references the compressed copies, and `dist/index.html` is **680 KB**.
 
-PNG is a poor format for photographs: these are 1254px square at roughly 2 MB each, shown
-in a 265px slot. The compressed `.jpg` copies are the same pictures at 560px and about
-75 KB. To switch back, point the four `src` attributes in `index.html` at
-`hero-image.jpg` and `selfie-1.jpg` … `selfie-3.jpg`.
+Referencing the full-size PNGs instead makes it **10.6 MB**, and at that size the browser
+leaves large areas unpainted while it decodes them. That was measured both ways, not
+assumed.
+
+PNG is a poor format for photographs: the originals are 1254px square at roughly 2 MB
+each, shown in a 265px slot. The `.jpg` copies are the same pictures at 560px and about
+75 KB.
 
 To regenerate the compressed copies:
 
