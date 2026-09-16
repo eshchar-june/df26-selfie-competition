@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>June at Dreamforce</title>
+<meta name="description" content="Generate a LinkedIn post about June at Dreamforce '26 and share it for a chance to win a trip for four to Noah's Ark Waterpark.">
+<meta name="theme-color" content="#f4f2ef">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231e1f27'/%3E%3Cpath d='M4 20c3-4 5-4 8 0s5 4 8 0 5-4 8 0' stroke='%23bee0fe' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    <span>Ride the wave with us to Dreamforce &nbsp;&middot;&nbsp; End the drought &nbsp;&middot;&nbsp; Ride the wave with us to Dreamforce &nbsp;&middot;&nbsp; End the drought &nbsp;&middot;&nbsp;&nbsp;</span>
+    <span>Ride the wave with us to Dreamforce &nbsp;&middot;&nbsp; End the drought &nbsp;&middot;&nbsp; Ride the wave with us to Dreamforce &nbsp;&middot;&nbsp; End the drought &nbsp;&middot;&nbsp;&nbsp;</span>
+  </div>
+</div>
+
+<header class="topbar">
+  <span class="wordmark">June</span>
+  <span class="topbar__tag">DF&rsquo;26</span>
+</header>
+
+<main>
+
+  <!-- ══ Intro ══ -->
+  <section class="view view--intro is-active" id="view-intro">
+    <p class="eyebrow">Dreamforce &rsquo;26 &nbsp;&middot;&nbsp; San Francisco</p>
+
+    <h1 class="display">Your next adventure could have a <em>splash&nbsp;landing.</em></h1>
+
+    <p class="lede">Win a two-night trip for four to Noah&rsquo;s Ark Waterpark in Wisconsin Dells, including:</p>
+
+    <ul class="prize">
+      <li><span class="prize__icon">&#9992;&#65039;</span><span>Round-trip coach airfare</span></li>
+      <li><span class="prize__icon">&#127976;</span><span>Hotel accommodations</span></li>
+      <li><span class="prize__icon">&#127754;</span><span>Four waterpark tickets</span></li>
+    </ul>
+
+    <div class="rule"></div>
+
+    <p class="body">Post about June on LinkedIn for a chance to win.<br><strong>Generate your draft, make it yours, and share.</strong></p>
+
+    <button class="btn btn--primary btn--block" id="start" type="button">Generate my post</button>
+
+    <a class="rules-link" id="rules-intro" href="#" target="_blank" rel="noopener">View full eligibility, official rules, and other ways to enter</a>
+  </section>
+
+  <!-- ══ Post ══ -->
+  <section class="view view--post" id="view-post">
+
+    <div class="card" id="card" data-theme="yellow">
+      <div class="card__accent" aria-hidden="true"></div>
+      <div class="card__head">
+        <span class="chip" id="chip">Watchlist</span>
+        <span class="card__count"><span id="counter">0</span>&thinsp;/&thinsp;3000</span>
+      </div>
+      <label class="sr-only" for="draft">Your LinkedIn post</label>
+      <textarea id="draft" class="draft" spellcheck="true" autocapitalize="sentences" rows="12"></textarea>
+      <div class="card__foot">
+        <span class="card__hint" id="hint">Tap the text to make it yours</span>
+        <button class="linkish" id="reset" type="button" hidden>Undo edits</button>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn--secondary" id="regen" type="button">Generate new</button>
+      <button class="btn btn--primary" id="share" type="button">Share</button>
+    </div>
+
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+
+    <button class="linkish linkish--center" id="copy" type="button">Copy text instead</button>
+
+    <a class="rules-link" id="rules-post" href="#" target="_blank" rel="noopener">View full eligibility, official rules, and other ways to enter</a>
+  </section>
+
+</main>
+
+<script src="posts.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
