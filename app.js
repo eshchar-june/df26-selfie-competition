@@ -16,6 +16,7 @@
   var pips = $('pips'), hint = $('hint'), resetBtn = $('reset'), status = $('status');
   var prevBtn = $('prev'), nextBtn = $('next'), copyBtn = $('copy'), shareBtn = $('share');
   var preview = $('preview'), tags = $('tags');
+  var shots = document.querySelectorAll('.selfie .shot');
 
   /* ── State ── */
   var i = 0;              // current template
@@ -83,9 +84,19 @@
     pips.innerHTML = html;
   }
 
+  /* Each template shows a different booth selfie, cycling through the set. */
+  function drawShot() {
+    if (!shots.length) return;
+    var pick = i % shots.length;
+    for (var k = 0; k < shots.length; k++) {
+      shots[k].classList.toggle('is-on', k === pick);
+    }
+  }
+
   /* ── Render ── */
   function render() {
     draft.value = POSTS[i].text;
+    drawShot();
     drawPreview(draft.value);
     num.textContent = pad(i + 1);
     pos.textContent = i + 1;
