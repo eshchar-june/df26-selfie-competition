@@ -5,7 +5,7 @@
 | file | what it is | used by |
 |------|------------|---------|
 | `selfie-1.jpg` … `selfie-4.jpg` | Booth selfies at the June wall | the LinkedIn post preview |
-| `waterpark.png` | **Missing.** Noah's Ark Waterpark, cut out on white | the hero |
+| `hero-image.jpg` | Noah's Ark Waterpark, cut out on off-white | the hero |
 
 `build.js` embeds whatever it finds here as a data URI and warns for anything missing, so
 a build without the waterpark photo still succeeds — the hero falls back to drawn art.
@@ -26,19 +26,22 @@ for n in 1 2 3 4; do
 done
 ```
 
-## The waterpark photo
+## The hero photograph
 
-Still needed. Drop it in as `waterpark.png` — `.jpg`, `.webp` and `.gif` also work, but
-change the `src` in `index.html` to match.
+`hero-image.jpg` is compressed from `hero-image.png` (kept out of git) the same way as
+the selfies:
 
-**Keep its white background.** The hero renders it with `mix-blend-mode: multiply`, which
-drops that white into the cream page so the cut-out has no halo and the headline stays
-readable where it crosses the sky.
+```bash
+sips -s format jpeg -s formatOptions 86 -Z 820 hero-image.png --out hero-image.jpg
+```
 
-The hero crops to a taller frame than a landscape source (`aspect-ratio` plus
-`object-fit: cover` in `styles.css`), trimming the blank left margin so the art hangs low
-enough to notch the pink prize card. If the crop sits wrong, adjust `object-position` on
-`.waterpark` — currently `74% 50%`.
+**Keep its off-white background.** It is the same colour as the page (`#faf9f5`), so the
+cut-out seams into it invisibly. That also means no blend mode: multiplying two identical
+off-whites would darken the ground into a visible block.
+
+The hero never crops it. Both crops that were tried left a hard edge — through the sky
+wash on the left, and through the foliage at the bottom — so the frame contains the whole
+image, at the largest size that keeps it clear of the headline column.
 
 Until the file is there, a drawn stand-in shows in its place. Both photo slots hide
 themselves on error, so the page never shows a broken image.

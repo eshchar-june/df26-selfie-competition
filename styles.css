@@ -79,13 +79,13 @@ body{
 .hero__copy{position:relative;z-index:3}
 
 .hero__title{
-  margin:0;font-weight:700;font-size:clamp(20px,5.6vw,25px);
-  line-height:1.13;letter-spacing:-.025em;color:var(--navy);
-  max-width:40%;
+  margin:0;font-weight:700;font-size:clamp(16px,4.35vw,21px);
+  line-height:1.16;letter-spacing:-.025em;color:var(--navy);
+  max-width:56%;
 }
 .hero__sub{
-  margin:15px 0 0;font-size:13.5px;font-weight:500;
-  line-height:1.42;color:var(--navy);max-width:40%;
+  margin:13px 0 0;font-size:13px;font-weight:500;
+  line-height:1.42;color:var(--navy);max-width:56%;
 }
 
 /* The photograph sits clear of the copy column — no text runs over it, and
@@ -94,7 +94,7 @@ body{
    ground into a visible block. */
 .hero__art{
   position:absolute;top:6px;right:0;
-  width:56%;margin:0;z-index:2;
+  width:40%;margin:0;z-index:2;
 }
 /* Never cropped. The painterly edges fade into the page colour, and any crop
    cuts a hard line through the sky wash or the foliage. */
