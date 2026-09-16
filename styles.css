@@ -90,15 +90,15 @@ body{
   padding-top:44px;
 }
 .hero__copy{position:relative;z-index:3}
-.hero__eyebrow{
-  /* Carries .label label--coral for the grand-prize treatment; this rule only
-     centres it and gives the tracked caps room to wrap evenly. */
+/* Carries .label label--coral for the grand-prize treatment; this rule only
+   centres it and gives the tracked caps room to wrap evenly. The selector is
+   doubled so the centring margin beats .label's margin, which is declared
+   later in this file. */
+.hero__copy .hero__eyebrow{
   margin:0 auto 12px;max-width:24em;text-align:center;line-height:1.5;
 }
 
-/* Centred, and sized so the hand-placed break after "Take a selfie." is
-   followed by two lines of near-equal length rather than by a last line
-   carrying one word. */
+/* Centred. Wraps on its own now that the hand-placed break is gone. */
 .hero__title{
   margin:0;font-weight:700;font-size:clamp(26px,8vw,38px);
   line-height:1.08;letter-spacing:-.034em;color:var(--navy);
